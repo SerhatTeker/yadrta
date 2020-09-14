@@ -1,10 +1,10 @@
 django:
-	./manage.py runserver 8000
+	./todo/manage.py runserver 8000
 
 allmigrations: migrations migrate
 
 migrate:
-	./manage.py migrate
+	./todo/manage.py migrate
 migrations:
-	./manage.py makemigrations
+	./todo/manage.py makemigrations
 
