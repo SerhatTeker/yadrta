@@ -106,6 +106,9 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+# local dev database
+*.sqlite3
+
 # Vim
 Session.vim
 tags
