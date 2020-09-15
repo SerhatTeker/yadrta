@@ -1,3 +1,5 @@
+.DEFAULT_GOAL := django
+
 django:
 	./todo/manage.py runserver 8000
 
