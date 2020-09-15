@@ -43,6 +43,7 @@ THIRD_PARTY_APPS = [
     'rest_framework',
 ]
 LOCAL_APPS = [
+    "vone.apps.VoneConfig",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
