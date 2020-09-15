@@ -72,7 +72,7 @@ class Task(UUIDModel, CreatedbyModel, TimeStampedModel):
 
     title = models.CharField(max_length=255, blank=False, unique=True)
     description = models.TextField()
-    status = models.CharField(max_length=4, choices=STATES, default="todo")
+    status = models.CharField(max_length=15, choices=STATES, default="todo")
     tag = models.ForeignKey(to=Tag, on_delete=models.DO_NOTHING)
     category = models.ForeignKey(to=Category, on_delete=models.DO_NOTHING)
 
