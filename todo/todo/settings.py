@@ -44,6 +44,7 @@ THIRD_PARTY_APPS = [
 ]
 LOCAL_APPS = [
     "vone.apps.VoneConfig",
+    "users.apps.UsersConfig",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -59,6 +60,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'todo.urls'
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
+AUTH_USER_MODEL = "users.User"
 
 TEMPLATES = [
     {
