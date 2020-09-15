@@ -50,6 +50,9 @@ class UUIDModel(models.Model):
 class Category(UUIDModel, CreatedbyModel, TimeStampedModel):
     name = models.CharField(max_length=200, blank=False, verbose_name="Category Name")
 
+    class Meta:
+        verbose_name_plural = "Categories"
+
     def __str__(self):
         return self.name
 
@@ -77,4 +80,4 @@ class Task(UUIDModel, CreatedbyModel, TimeStampedModel):
     category = models.ForeignKey(to=Category, on_delete=models.DO_NOTHING)
 
     def __str__(self):
-        return f"{self.title}_{self.created_by}"
+        return f"{self.created_by}:{self.title}"
