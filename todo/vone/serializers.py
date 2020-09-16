@@ -6,6 +6,10 @@ base_model_mixin_fields = ["uuid", "created_by", "created_at", "changed_at"]
 
 
 class TaskSerializer(serializers.ModelSerializer):
+    tag = serializers.CharField(source="tag.name")
+    category = serializers.CharField(source="category.name")
+    created_by = serializers.CharField(source="created_by.username")
+
     class Meta:
         model = Task
         fields = base_model_mixin_fields + [
