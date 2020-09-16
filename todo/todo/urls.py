@@ -13,6 +13,8 @@ drf = [
     path('api-auth/', include('rest_framework.urls')),
 ]
 
-api_v1 = []
+api_v1 = [
+    path('api/v1/', include('vone.urls')),
+]
 
 urlpatterns = default + drf + api_v1
