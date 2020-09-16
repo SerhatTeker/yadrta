@@ -5,6 +5,18 @@ from vone.models import Category, Tag, Task
 base_model_mixin_fields = ["uuid", "created_by", "created_at", "changed_at"]
 
 
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = base_model_mixin_fields + ["name"]
+
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = base_model_mixin_fields + ["name"]
+
+
 class TaskSerializer(serializers.ModelSerializer):
     # Disable due to
     # The `.create()` method does not support writable dotted-source fields by default.
@@ -22,15 +34,3 @@ class TaskSerializer(serializers.ModelSerializer):
             "tag",
             "category",
         ]
-
-
-class CategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Category
-        fields = base_model_mixin_fields + ["name"]
-
-
-class TagSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Tag
-        fields = base_model_mixin_fields + ["name"]
