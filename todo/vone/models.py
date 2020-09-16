@@ -47,7 +47,17 @@ class UUIDModel(models.Model):
         abstract = True
 
 
-class Category(UUIDModel, CreatedbyModel, TimeStampedModel):
+class BaseModelMixin(UUIDModel, CreatedbyModel, TimeStampedModel):
+    """
+    Base Data Model Mixin for data models:
+    `created_at`, `changed_at`, `created_by`, `id` which using uuid4.
+    """
+
+    class Meta:
+        abstract = True
+
+
+class Category(BaseModelMixin):
     name = models.CharField(max_length=200, blank=False, verbose_name="Category Name")
 
     class Meta:
@@ -57,14 +67,14 @@ class Category(UUIDModel, CreatedbyModel, TimeStampedModel):
         return self.name
 
 
-class Tag(UUIDModel, CreatedbyModel, TimeStampedModel):
+class Tag(BaseModelMixin):
     name = models.CharField(max_length=200, blank=False, verbose_name="Tag Name")
 
     def __str__(self):
         return self.name
 
 
-class Task(UUIDModel, CreatedbyModel, TimeStampedModel):
+class Task(BaseModelMixin):
     STATES = (
         ("todo", "Todo"),
         ("wip", "Work in Progress"),
