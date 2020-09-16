@@ -41,7 +41,7 @@ class UUIDModel(models.Model):
     using uuid4.
     """
 
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
 
     class Meta:
         abstract = True
