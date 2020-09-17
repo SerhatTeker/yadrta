@@ -1,8 +1,10 @@
 from django.contrib import admin
 from django.urls import path, include
 
+# django defaults
+# -------------------------------------------------------------------------------
 default = [
-    # Admin
+    # django admin
     path('admin/', admin.site.urls),
 ]
 
@@ -13,6 +15,8 @@ drf = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
 
+# API v1
+# -------------------------------------------------------------------------------
 api_v1 = [
     path('api/v1/', include('todo.vone.urls')),
 ]
