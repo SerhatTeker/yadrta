@@ -14,7 +14,7 @@ drf = [
 ]
 
 api_v1 = [
-    path('api/v1/', include('vone.urls')),
+    path('api/v1/', include('todo.vone.urls')),
 ]
 
 urlpatterns = default + drf + api_v1

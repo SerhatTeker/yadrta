@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class VoneConfig(AppConfig):
-    name = 'vone'
+    name = 'todo.vone'

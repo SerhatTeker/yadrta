@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from vone.models import Category, Tag, Task
+from todo.vone.models import Category, Tag, Task
 
 base_model_mixin_fields = ["uuid", "created_by", "created_at", "changed_at"]
 

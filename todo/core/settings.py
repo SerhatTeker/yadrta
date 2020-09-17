@@ -11,9 +11,11 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from pathlib import Path
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
+# todo/
+APPS_DIR = ROOT_DIR / "todo"
 
 
 # Quick-start development settings - unsuitable for production
@@ -42,7 +44,10 @@ DJANGO_APPS = [
     # "django.contrib.humanize", # Handy template tags
 ]
 THIRD_PARTY_APPS = ["rest_framework"]
-LOCAL_APPS = ["vone.apps.VoneConfig", "users.apps.UsersConfig"]
+LOCAL_APPS = [
+    "todo.vone.apps.VoneConfig",
+    "todo.users.apps.UsersConfig",
+]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -56,7 +61,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "todo.urls"
+ROOT_URLCONF = "todo.core.urls"
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
 AUTH_USER_MODEL = "users.User"
@@ -77,7 +82,7 @@ TEMPLATES = [
     }
 ]
 
-WSGI_APPLICATION = "todo.wsgi.application"
+WSGI_APPLICATION = "todo.core.wsgi.application"
 
 
 # Database
@@ -86,7 +91,7 @@ WSGI_APPLICATION = "todo.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+        "NAME": os.path.join(ROOT_DIR, "db.sqlite3"),
     }
 }
 
