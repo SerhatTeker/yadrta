@@ -10,7 +10,7 @@ default = [
 # -------------------------------------------------------------------------------
 drf = [
     # Auth
-    path('api-auth/', include('rest_framework.urls')),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
 
 api_v1 = [
