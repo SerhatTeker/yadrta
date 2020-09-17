@@ -44,10 +44,7 @@ DJANGO_APPS = [
     # "django.contrib.humanize", # Handy template tags
 ]
 THIRD_PARTY_APPS = ["rest_framework"]
-LOCAL_APPS = [
-    "todo.vone.apps.VoneConfig",
-    "todo.users.apps.UsersConfig",
-]
+LOCAL_APPS = ["todo.vone.apps.VoneConfig", "todo.users.apps.UsersConfig"]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -116,7 +113,9 @@ REST_FRAMEWORK = {
     # or allow read-only access for unauthenticated users.
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
-    ]
+    ],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 10,
 }
 
 # Internationalization
