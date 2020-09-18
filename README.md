@@ -1,8 +1,9 @@
 [![license](https://img.shields.io/badge/license-bsd%203--clause-blue.svg)](https://opensource.org/licenses/bsd-3-clause)
+[![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
-# # Django Rest Todo - ATDA
+# # YADRTA
 
-Another todo app using django rest and django with openapi specification.
+__Yet Another Djando REST Todo App__ using django rest and django with [OpenAPI Specification].
 
 ![openapi - swagger](./docs/img/screenshots/swagger.png)
 _swagger_
@@ -17,8 +18,6 @@ _django rest api_
 
 This app gets requests from `localhost` on port `8000` and performs __CRUD__
 operations.
-
-<!-- `GET` `PUT` `DELETE` `POST` -->
 
 Base endpoints are:
 - The base endpoint is: http://localhost:8000
@@ -131,48 +130,118 @@ Use one of the below endpoints:
 
 Congratulations, you have made it!
 
-<!--
-## Running the tests
+## ## Usage
 
-Explain how to run the automated tests for this system
+Activate _virtual environment_ and run _django development server_:
 
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
+```bash
+$ source .venv/bin/activate
+$ python manage.py runserver 8000
 ```
 
-### And coding style tests
+Use `cli` tools like `curl` or [httpie]:
 
-Explain what these tests test and why
+`curl`:
 
+```bash
+$ curl -H 'Accept: application/json; indent=4' -u testadmin:123asX3?23 http://127.0.0.1:8000/api/v1/todo/
 ```
-Give an example
+
+`httpie`:
+
+```bash
+$ http -a testadmin:123asX3?23 http://127.0.0.1:8000/api/v1/todo/
 ```
--->
 
-## Usage
+after those you will get below _todo sample api response_:
 
-<!--
-## Deployment
+### ### Sample API Responses
 
-Add additional notes about how to deploy this on a live system
+`/category/`
 
-## Built With
+```json
+{
+    "count": 2,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "uuid": "25696439-a580-4489-9e5a-6172d0954430",
+            "created_by": 1,
+            "created_at": "2020-09-17T15:51:26.527025Z",
+            "changed_at": "2020-09-17T15:51:26.527058Z",
+            "name": "business"
+        },
+        {
+            "uuid": "89e875b3-ae1d-4a91-a8d0-b4975127d97f",
+            "created_by": 1,
+            "created_at": "2020-09-17T15:51:38.682076Z",
+            "changed_at": "2020-09-17T15:51:38.682147Z",
+            "name": "learning"
+        }
+    ]
+}
+```
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+`/tag/`
 
-## Contributing
+```json
+{
+    "count": 2,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "uuid": "d1911f18-8a49-457c-aa72-b1e9ae9e198d",
+            "created_by": 1,
+            "created_at": "2020-09-17T15:49:42.392670Z",
+            "changed_at": "2020-09-17T15:49:42.392730Z",
+            "name": "newthing"
+        },
+        {
+            "uuid": "a95acc20-483c-43de-83e7-c6fe44ba4f2e",
+            "created_by": 1,
+            "created_at": "2020-09-17T15:49:56.709027Z",
+            "changed_at": "2020-09-17T15:49:56.709064Z",
+            "name": "language"
+        }
+    ]
+}
+```
 
-Please read
-[CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for
-details on our code of conduct, and the process for submitting pull requests to
-us.
--->
+`/todo/`
+
+```json
+{
+    "count": 2,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "uuid": "9d208186-0987-4a7c-a75c-17094b7e6aab",
+            "created_by": 1,
+            "created_at": "2020-09-17T15:52:28.944148Z",
+            "changed_at": "2020-09-17T15:52:28.944182Z",
+            "title": "bla bla",
+            "description": "bla bla",
+            "status": "todo",
+            "tag": 1,
+            "category": 1
+        },
+        {
+            "uuid": "d9a804a6-79c3-40bc-befb-3c0290d1f0c8",
+            "created_by": 1,
+            "created_at": "2020-09-17T15:53:05.809323Z",
+            "changed_at": "2020-09-17T15:53:05.809356Z",
+            "title": "bla bla2",
+            "description": "bla bla2",
+            "status": "todo",
+            "tag": 1,
+            "category": 1
+        }
+    ]
+}
+```
 
 ## Versioning
 
@@ -183,11 +252,13 @@ see the [tags on this repository](https://github.com/your/project/tags).
 
 * **Serhat Teker** - *Initial work* - [serhatteker](https://github.com/serhatteker)
 
-<!-- See also the list of
-[contributors](https://github.com/your/project/contributors) who participated in
-this project. -->
-
 ## License
 
 This project is licensed under the BSD-3-Clause License - see the
 [LICENSE.md](LICENSE.md) file for details.
+
+
+
+
+[httpie]: https://github.com/httpie/httpie
+[OpenAPI Specification]: https://swagger.io/specification/
