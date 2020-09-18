@@ -22,7 +22,9 @@ operations.
 
 Base endpoints are:
 - The base endpoint is: http://localhost:8000
-- `BASE_URL` for `api` is `/api/v1/`
+- `$base_url` for `api` is `/api/v1/`
+- Admin panels: `/admin/`
+- Authentication: `/api-auth/login/` `/api-auth/logout/`
 
 CRUD api endpoints:
 - `/api/v1/category/`
@@ -96,9 +98,34 @@ $ git clone git@github.com:SerhatTeker/django-rest-todo.git
     # $ make
     ```
 
-#### #### Setting Up Development Environment
+#### #### Setting Up Your Users
 
+* To create an **superuser account**, use this command::
 
+    ```bash
+    $ python manage.py createsuperuser
+    ```
+
+    or define _environment variable_ named `DJANGO_DEV_ADMIN` and use `make
+    createsuperuser`:
+
+    ```bash
+    # Create a super user from env var
+    # You need to define an env var : DJANGO_DEV_ADMIN. Example below
+    # DJANGO_DEV_ADMIN=name:email:password
+    $ export DJANGO_DEV_ADMIN=testadmin@test.api:testadmin@test.api:123asX3?23
+    $ make createsuperuser
+    ```
+
+* To create a **normal user account**, just sign in as __superuser__ into
+ __Admin Module__ (`/admin/`) and create a new user.
+
+#### #### Login
+
+Use one of the below endpoints:
+
+- `/admin/`
+- `/api-auth/login/`
 
 #### #### Summary
 
