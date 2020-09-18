@@ -48,7 +48,7 @@ class TodoViewSet(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
 
 
-# ViewSets
+# OpenAPI schema
 # ------------------------------------------------------------------------------
 schema_view = get_schema_view(
     openapi.Info(
