@@ -29,7 +29,7 @@ SECRET_KEY = os.getenv(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "0.0.0.0"]
 
 
 # APPS
@@ -43,11 +43,7 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
     # "django.contrib.humanize", # Handy template tags
 ]
-THIRD_PARTY_APPS = [
-    "rest_framework",
-    "rest_framework_swagger",
-    "drf_yasg",
-]
+THIRD_PARTY_APPS = ["rest_framework", "rest_framework_swagger", "drf_yasg"]
 LOCAL_APPS = ["todo.vone.apps.VoneConfig", "todo.users.apps.UsersConfig"]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
