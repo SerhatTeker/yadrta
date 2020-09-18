@@ -1,11 +1,17 @@
-from rest_framework import viewsets
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework import permissions
+from django.http import HttpResponseRedirect
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
+from rest_framework import permissions, viewsets
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
 from .models import Category, Tag, Task
 from .serializers import CategorySerializer, TagSerializer, TaskSerializer
+
+
+def index(request):
+    """ Redirect $home_url `/` to `/api/v1/` """
+    return HttpResponseRedirect("/api/v1/")
+
 
 # APIViews
 # ------------------------------------------------------------------------------

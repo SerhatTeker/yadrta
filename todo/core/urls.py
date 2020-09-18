@@ -1,9 +1,13 @@
 from django.contrib import admin
-from django.urls import include, path, re_path
+from django.urls import include, path
+
+from todo.vone.views import index
 
 # django defaults
 # -------------------------------------------------------------------------------
 default = [
+    # redirect to /api/v1/
+    path("", index),
     # django admin
     path("admin/", admin.site.urls)
 ]
