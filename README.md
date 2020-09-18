@@ -46,13 +46,13 @@ For documemtation:
 Clone the repo with `ssh`:
 
 ```bash
-$ git clone https://github.com/SerhatTeker/django-rest-todo.git
+$ git clone https://github.com/SerhatTeker/yadrta.git
 ```
 
 or with `https`:
 
 ```bash
-$ git clone git@github.com:SerhatTeker/django-rest-todo.git
+$ git clone git@github.com:SerhatTeker/yadrta.git
 ```
 
 ### ### Getting Up and Running Locally
@@ -246,7 +246,7 @@ after those you will get below _todo sample api response_:
 ## Versioning
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available,
-see the [tags on this repository](https://github.com/your/project/tags).
+see the [tags on this repository](https://github.com/serhatteker/yadrta/tags).
 
 ## Authors
 
