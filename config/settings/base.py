@@ -58,8 +58,8 @@ MIDDLEWARE = (
 )
 
 ALLOWED_HOSTS = ["*"]
-ROOT_URLCONF = "yadrta.urls"
-WSGI_APPLICATION = "yadrta.wsgi.application"
+ROOT_URLCONF = "config.urls"
+WSGI_APPLICATION = "config.wsgi.application"
 
 # Email
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
