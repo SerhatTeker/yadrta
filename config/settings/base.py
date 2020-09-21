@@ -41,6 +41,7 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "src.users",
+    "src.vone.apps.VoneConfig",
 ]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
