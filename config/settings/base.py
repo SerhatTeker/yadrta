@@ -40,7 +40,7 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    "src.users.apps.UsersConfig",
+    "src.users",
 ]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -65,12 +65,6 @@ WSGI_APPLICATION = "config.wsgi.application"
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 ADMINS = (("Author", "serhat.teker@gmail.com"),)
-
-# DATABASES
-# ------------------------------------------------------------------------------
-# https://docs.djangoproject.com/en/dev/ref/settings/#databases
-DATABASES = {"default": os.getenv("DATABASE_URL", default="postgres:///djangonews")}
-DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 # URL
 APPEND_SLASH = False

@@ -1,14 +1,13 @@
 import os
 
 from .base import *  # noqa
-from .base import env
 
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
-SECRET_KEY = env(
+SECRET_KEY = os.getenv(
     "DJANGO_SECRET_KEY",
     default="kY2h68D0TgYGFibh1GiRlZ1PLE52zTKpbIFIymEsNc5zoauSn6asnnSr2dtOiOf1",
 )
