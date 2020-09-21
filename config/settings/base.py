@@ -37,6 +37,8 @@ THIRD_PARTY_APPS = [
     "rest_framework.authtoken",
     # for filtering rest endpoints
     "django_filters",
+    # OpenAPI
+    "drf_yasg",
 ]
 
 LOCAL_APPS = [
