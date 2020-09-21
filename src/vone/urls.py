@@ -4,10 +4,10 @@ from rest_framework.routers import DefaultRouter
 from . import views
 
 # Create a router and register our viewsets with it.
-router = DefaultRouter()
-router.register(r"todo", views.TodoViewSet)
-router.register(r"tag", views.TagViewSet)
-router.register(r"category", views.CategoryViewSet)
+# router = DefaultRouter()
+# router.register(r"todo", views.TodoViewSet)
+# router.register(r"tag", views.TagViewSet)
+# router.register(r"category", views.CategoryViewSet)
 
 
 # disabled
@@ -16,7 +16,7 @@ api_views = [
     path("todos/<int:id>", views.TodoDetailView.as_view()),
 ]
 
-model_view_sets = [path("", include(router.urls))]
+# model_view_sets = [path("", include(router.urls))]
 
 swagger = [
     re_path(
@@ -36,4 +36,4 @@ swagger = [
     ),
 ]
 
-urlpatterns = model_view_sets + swagger
+urlpatterns = swagger
