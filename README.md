@@ -33,6 +33,7 @@ _django rest api_
     * [Login](#login)
   * [API v1](#api-v1)
     * [Sample API Responses](#sample-api-responses)
+* [Test](#test)
 * [Versioning](#versioning)
 * [Authors](#authors)
 * [License](#license)
@@ -322,6 +323,8 @@ After those you will get below _todo sample api response_:
     ]
 }
 ```
+
+## Test
 
 ## Versioning
 
