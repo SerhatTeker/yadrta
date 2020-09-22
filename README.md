@@ -21,25 +21,26 @@ operations.
 
 Base endpoints are:
 - The base endpoint is: http://localhost:8000
-- `$base_url` for `api` is `/api/v1/`
+- `base_url` for __API v1__ is `/api/v1/`
+- Session Authentication: `/api-auth/login/` `/api-auth/logout/`
 - Admin panels: `/admin/`
-- Authentication: `/api-auth/login/` `/api-auth/logout/`
 
-CRUD api endpoints:
+__CRUD API__ endpoints:
 - `/api/v1/category/`
 - `/api/v1/tag/`
 - `/api/v1/todo/`
 
 For documemtation:
-- `/api/v1/swagger/`
-- `/api/v1/swagger.yaml`
-- `/api/v1/swagger.json`
-- `/api/v1/redoc/`
+- `/api/v1/doc/swagger/`
+- `/api/v1/doc/swagger.yaml`
+- `/api/v1/doc/swagger.json`
+- `/api/v1/doc/redoc/`
 
 
 ### ### Prerequisites
 
 - Python 3.8
+- [httpie] - (optional) | Modern alternative for `curl`
 
 ### ### Installing
 
@@ -97,35 +98,6 @@ $ git clone git@github.com:SerhatTeker/yadrta.git
     # $ make
     ```
 
-#### #### Setting Up Your Users
-
-* To create an **superuser account**, use this command::
-
-    ```bash
-    $ python manage.py createsuperuser
-    ```
-
-    or define _environment variable_ named `DJANGO_DEV_ADMIN` and use `make
-    createsuperuser`:
-
-    ```bash
-    # Create a super user from env var
-    # You need to define an env var : DJANGO_DEV_ADMIN. Example below
-    # DJANGO_DEV_ADMIN=name:email:password
-    $ export DJANGO_DEV_ADMIN=testadmin@test.api:testadmin@test.api:123asX3?23
-    $ make createsuperuser
-    ```
-
-* To create a **normal user account**, just sign in as __superuser__ into
- __Admin Module__ (`/admin/`) and create a new user.
-
-#### #### Login
-
-Use one of the below endpoints:
-
-- `/admin/`
-- `/api-auth/login/`
-
 #### #### Summary
 
 Congratulations, you have made it!
@@ -139,23 +111,98 @@ $ source .venv/bin/activate
 $ python manage.py runserver 8000
 ```
 
-Use `cli` tools like `curl` or [httpie]:
+### ### Authentication
+
+This app uses 2 different `auth` methods:
+
+- [Session Authentication]
+- [Token Authentication]
+
+#### #### Create User
+
+```bash
+$ curl -d '{"username":"testuser", "password":"testuser", "email":"testuser@testapi.com"}' \
+	     -H "Content-Type: application/json" \
+	     -X POST http://localhost:8000/api/v1/users/
+```
+
+#### #### Create Superuser
+
+1. From `manage.py` cli utility tool:
+
+```bash
+$ python manage.py createsuperuser --username testdamin --email testadmin@testapi.com
+```
+
+2. From `make` target:
+
+First you need to define the environment variable : `DJANGO_DEV_ADMIN`.
+
+```bash
+# DJANGO_DEV_ADMIN=name:email:password
+DJANGO_DEV_ADMIN=testadmin:testadmin@testapi.com:123asX3?23
+```
+
+Then run;
+
+```bash
+$ make createsuperuser
+```
+
+which will run:
+
+```make
+createsuperuser:
+	@echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser(*'${DJANGO_DEV_ADMIN}'.split(':'))" | python manage.py shell
+```
+
+#### #### Getting User Token
+
+Run :
+
+```bash
+$ http http://localhost:8000/api-token-auth/ username=testuser password=testuser
+```
+
+Output will be like:
+
+```bash
+HTTP/1.1 200 OK
+Allow: POST, OPTIONS
+Content-Length: 52
+Content-Type: application/json
+Date: Tue, 22 Sep 2020 13:57:46 GMT
+Referrer-Policy: same-origin
+Server: WSGIServer/0.2 CPython/3.8.1
+Vary: Cookie
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+
+{
+    "token": "80ca0dadab06b34623a6b8279320e8341e2a5102"
+}
+```
+
+#### #### Login
+
+Use one of the below endpoints:
+
+- `/admin/`
+- `/api-auth/login/`
+
+### ### API v1
 
 `curl`:
 
 ```bash
-$ curl -H 'Accept: application/json; indent=4' -u testadmin:123asX3?23 http://127.0.0.1:8000/api/v1/todo/
+$ curl -X GET http://localhost:8000/api/v1/todo/ \
+		-H 'Authorization: Token <user_token>' \
+		-H 'Accept: application/json; indent=4'
 ```
 
-`httpie`:
+After those you will get below _todo sample api response_:
 
-```bash
-$ http -a testadmin:123asX3?23 http://127.0.0.1:8000/api/v1/todo/
-```
-
-after those you will get below _todo sample api response_:
-
-### ### Sample API Responses
+#### #### Sample API Responses
 
 `/category/`
 
@@ -250,7 +297,7 @@ see the [tags on this repository](https://github.com/serhatteker/yadrta/tags).
 
 ## Authors
 
-* **Serhat Teker** - *Initial work* - [serhatteker](https://github.com/serhatteker)
+* **Serhat Teker** [serhatteker](https://github.com/serhatteker)
 
 ## License
 
@@ -262,3 +309,5 @@ This project is licensed under the BSD-3-Clause License - see the
 
 [httpie]: https://github.com/httpie/httpie
 [OpenAPI Specification]: https://swagger.io/specification/
+[Session Authentication]: https://www.django-rest-framework.org/api-guide/authentication/#sessionauthentication
+[Token Authentication]: https://www.django-rest-framework.org/api-guide/authentication/#tokenauthentication
