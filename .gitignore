@@ -55,6 +55,9 @@ coverage.xml
 .static_storage/
 .media/
 local_settings.py
+create-user
+curl
+
 
 # Flask stuff:
 instance/

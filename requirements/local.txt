@@ -1,0 +1,18 @@
+-r ./base.txt
+
+# Developer Tools
+# ------------------------------------------------------------------------------
+ipdb==0.13.3
+ipython==7.18.1
+mkdocs==1.1.2
+flake8==3.8.3
+
+# Testing
+# ------------------------------------------------------------------------------
+mock==4.0.2
+factory-boy==3.0.1
+django-nose==1.4.7
+nose-progressive==1.5.2
+coverage==5.3
+pytest==6.0.1  # https://github.com/pytest-dev/pytest
+pytest-sugar==0.9.3  # https://github.com/Frozenball/pytest-sugar
