@@ -1,9 +1,10 @@
 [![license](https://img.shields.io/badge/license-bsd%203--clause-blue.svg)](https://opensource.org/licenses/bsd-3-clause)
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
-# # YADRTA
+# YADRTA
 
 __Yet Another Djando REST Todo App__ using django rest and django with [OpenAPI Specification].
+
 
 ![openapi - swagger](./docs/img/screenshots/swagger.png)
 _swagger_
@@ -14,7 +15,27 @@ _redoc_
 ![django rest](./docs/img/screenshots/drf.png)
 _django rest api_
 
-## ## Getting Started
+## Table of Contents
+
+* [Getting Started](#getting-started)
+  * [Prerequisites](#prerequisites)
+  * [Installing](#installing)
+  * [Getting Up and Running Locally](#getting-up-and-running-locally)
+    * [Setting Up Development Environment](#setting-up-development-environment)
+    * [Summary](#summary)
+* [Usage](#usage)
+  * [Authentication](#authentication)
+    * [Create User](#create-user)
+    * [Create Superuser](#create-superuser)
+    * [Getting User Token](#getting-user-token)
+    * [Login](#login)
+  * [API v1](#api-v1)
+    * [Sample API Responses](#sample-api-responses)
+* [Versioning](#versioning)
+* [Authors](#authors)
+* [License](#license)
+
+## Getting Started
 
 This app gets requests from `localhost` on port `8000` and performs __CRUD__
 operations.
@@ -37,12 +58,12 @@ For documemtation:
 - `/api/v1/doc/redoc/`
 
 
-### ### Prerequisites
+### Prerequisites
 
 - Python 3.8
-- [httpie] - (optional) | Modern alternative for `curl`
+- [httpie] - (optional) | modern alternative for `curl`
 
-### ### Installing
+### Installing
 
 Clone the repo with `ssh`:
 
@@ -56,9 +77,9 @@ or with `https`:
 $ git clone git@github.com:SerhatTeker/yadrta.git
 ```
 
-### ### Getting Up and Running Locally
+### Getting Up and Running Locally
 
-#### #### Setting Up Development Environment
+#### Setting Up Development Environment
 
 1. Create a virtualenv:
 
@@ -98,11 +119,11 @@ $ git clone git@github.com:SerhatTeker/yadrta.git
     # $ make
     ```
 
-#### #### Summary
+#### Summary
 
 Congratulations, you have made it!
 
-## ## Usage
+## Usage
 
 Activate _virtual environment_ and run _django development server_:
 
@@ -111,14 +132,14 @@ $ source .venv/bin/activate
 $ python manage.py runserver 8000
 ```
 
-### ### Authentication
+### Authentication
 
 This app uses 2 different `auth` methods:
 
 - [Session Authentication]
 - [Token Authentication]
 
-#### #### Create User
+#### Create User
 
 ```bash
 $ curl -d '{"username":"testuser", "password":"testuser", "email":"testuser@testapi.com"}' \
@@ -126,7 +147,7 @@ $ curl -d '{"username":"testuser", "password":"testuser", "email":"testuser@test
 	     -X POST http://localhost:8000/api/v1/users/
 ```
 
-#### #### Create Superuser
+#### Create Superuser
 
 1. From `manage.py` cli utility tool:
 
@@ -156,7 +177,7 @@ createsuperuser:
 	@echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser(*'${DJANGO_DEV_ADMIN}'.split(':'))" | python manage.py shell
 ```
 
-#### #### Getting User Token
+#### Getting User Token
 
 Run :
 
@@ -183,14 +204,14 @@ X-Frame-Options: DENY
 }
 ```
 
-#### #### Login
+#### Login
 
 Use one of the below endpoints:
 
 - `/admin/`
 - `/api-auth/login/`
 
-### ### API v1
+###  API v1
 
 `curl`:
 
@@ -202,9 +223,9 @@ $ curl -X GET http://localhost:8000/api/v1/todo/ \
 
 After those you will get below _todo sample api response_:
 
-#### #### Sample API Responses
+#### Sample API Responses
 
-`/category/`
+- `/category/`
 
 ```json
 {
@@ -230,7 +251,7 @@ After those you will get below _todo sample api response_:
 }
 ```
 
-`/tag/`
+- `/tag/`
 
 ```json
 {
@@ -256,7 +277,7 @@ After those you will get below _todo sample api response_:
 }
 ```
 
-`/todo/`
+- `/todo/`
 
 ```json
 {
