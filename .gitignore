@@ -58,6 +58,7 @@ local_settings.py
 create-user
 curl
 
+
 # Flask stuff:
 instance/
 .webassets-cache

@@ -5,7 +5,6 @@
 
 __Yet Another Djando REST Todo App__ using django rest and django with [OpenAPI Specification].
 
-
 ![openapi - swagger](./docs/img/screenshots/swagger.png)
 _swagger_
 
@@ -37,6 +36,7 @@ _django rest api_
 
 ## Getting Started
 
+
 This app gets requests from `localhost` on port `8000` and performs __CRUD__
 operations.
 
@@ -47,6 +47,7 @@ Base endpoints are:
 - Admin panels: `/admin/`
 
 __CRUD API__ endpoints:
+
 - `/api/v1/category/`
 - `/api/v1/tag/`
 - `/api/v1/todo/`
@@ -65,6 +66,7 @@ For documemtation:
 
 ### Installing
 
+
 Clone the repo with `ssh`:
 
 ```bash
@@ -80,6 +82,7 @@ $ git clone git@github.com:SerhatTeker/yadrta.git
 ### Getting Up and Running Locally
 
 #### Setting Up Development Environment
+
 
 1. Create a virtualenv:
 
@@ -226,6 +229,7 @@ After those you will get below _todo sample api response_:
 #### Sample API Responses
 
 - `/category/`
+
 
 ```json
 {
