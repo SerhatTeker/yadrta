@@ -16,12 +16,15 @@ _django rest api_
 
 ## Table of Contents
 
-* [Getting Started](#getting-started)
+* [Table of Contents](#table-of-contents)
+* [General](#general)
+  * [Endpoints](#endpoints)
+  * [Branches](#branches)
   * [Prerequisites](#prerequisites)
+* [Getting Up and Running Locally](#getting-up-and-running-locally)
   * [Installing](#installing)
-  * [Getting Up and Running Locally](#getting-up-and-running-locally)
-    * [Setting Up Development Environment](#setting-up-development-environment)
-    * [Summary](#summary)
+  * [Setting Up Development Environment](#setting-up-development-environment)
+  * [Summary](#summary)
 * [Usage](#usage)
   * [Authentication](#authentication)
     * [Create User](#create-user)
@@ -34,8 +37,9 @@ _django rest api_
 * [Authors](#authors)
 * [License](#license)
 
-## Getting Started
+## General
 
+### Endpoints
 
 This app gets requests from `localhost` on port `8000` and performs __CRUD__
 operations.
@@ -58,14 +62,21 @@ For documemtation:
 - `/api/v1/doc/swagger.json`
 - `/api/v1/doc/redoc/`
 
+### Branches
+
+- [master] - default branch, equals to deployment
+- [basic] - using django's default basic structure
+- [local] - just for local development
+- [deployment] - prod
+- [pytest] - wip
 
 ### Prerequisites
 
 - Python 3.8
-- [httpie] - (optional) | modern alternative for `curl`
+
+## Getting Up and Running Locally
 
 ### Installing
-
 
 Clone the repo with `ssh`:
 
@@ -79,10 +90,7 @@ or with `https`:
 $ git clone git@github.com:SerhatTeker/yadrta.git
 ```
 
-### Getting Up and Running Locally
-
-#### Setting Up Development Environment
-
+### Setting Up Development Environment
 
 1. Create a virtualenv:
 
@@ -122,7 +130,7 @@ $ git clone git@github.com:SerhatTeker/yadrta.git
     # $ make
     ```
 
-#### Summary
+### Summary
 
 Congratulations, you have made it!
 
@@ -336,3 +344,8 @@ This project is licensed under the BSD-3-Clause License - see the
 [OpenAPI Specification]: https://swagger.io/specification/
 [Session Authentication]: https://www.django-rest-framework.org/api-guide/authentication/#sessionauthentication
 [Token Authentication]: https://www.django-rest-framework.org/api-guide/authentication/#tokenauthentication
+[master]: https://github.com/SerhatTeker/yadrta/tree/master
+[basic]: https://github.com/SerhatTeker/yadrta/tree/basic
+[local]: https://github.com/SerhatTeker/yadrta/tree/local
+[deployment]: https://github.com/SerhatTeker/yadrta/tree/deployment
+[pytest]: https://github.com/SerhatTeker/yadrta/tree/pytest
