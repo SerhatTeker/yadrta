@@ -4,7 +4,7 @@ from django.test import TestCase
 from nose.tools import eq_, ok_
 
 from src.users.serializers import CreateUserSerializer
-from src.users.test.factories import UserFactory
+from tests.users.factories import UserFactory
 
 
 class TestCreateUserSerializer(TestCase):
