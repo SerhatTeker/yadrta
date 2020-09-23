@@ -42,7 +42,7 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    "src.users",
+    "src.users.apps.UsersConfig",
     "src.vone.apps.VoneConfig",
 ]
 
