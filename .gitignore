@@ -116,3 +116,6 @@ venv.bak/
 Session.vim
 tags
 tags.*
+
+# Vscode
+.vscode/
