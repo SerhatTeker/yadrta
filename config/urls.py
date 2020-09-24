@@ -20,7 +20,7 @@ router.register(r"category", CategoryViewSet)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api-token-auth/", auth_views.obtain_auth_token),
+    path("api-token-auth/", auth_views.obtain_auth_token, name="obtain_auth_token"),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     # the 'api-root' from django rest-frameworks default router
     # http://www.django-rest-framework.org/api-guide/routers/#defaultrouter
