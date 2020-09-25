@@ -67,31 +67,20 @@ class TestTagCreateAPIView(APITestCase):
     def test_create_tag(self):
         payload = {"name": self.tag.name, "created_by": self.user.pk}
         response = self.client.post(self.url, payload)
-        # print(f"response __dict__: {response.__dict__}")
-        # print(f"response content: {response.content}")
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
 
 
 class TestTagDetailView(APITestCase):
     """
-    Tests /tag list operations.
+    Tests /tag detail operations.
     """
 
     def setUp(self):
         self.url = reverse("tag-list")
-        # try_two
         self.tag = TagFactory()
         print(f"tag: {self.tag}")
         print(f"created_by: {self.tag.created_by}")
         self.user = self.tag.created_by
-        # try_one
-        # self.user_data = factory.build(dict, FACTORY_CLASS=UserFactory)
-        # self.tag_data = factory.build(dict, FACTORY_CLASS=TagFactory)
-        # print(f"tag_data: {self.tag_data}")
-        # print(f"user obj: {self.tag_data.get('created_by')}")
-        # print(f"user.id: {self.tag_data.get('created_by').id}")
-        # self.user = self.tag_data.get("created_by")
-        # self.user = User.objects.get(pk=self.tag_data.get("created_by").id)
         self.api_authentication()
         self.response = self.set_response()
 
