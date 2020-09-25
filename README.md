@@ -344,7 +344,7 @@ see the [tags on this repository](https://github.com/serhatteker/yadrta/tags).
 ## License
 
 This project is licensed under the BSD-3-Clause License - see the
-[LICENSE.md](LICENSE.md) file for details.
+[LICENSE](LICENSE) file for details.
 
 
 
