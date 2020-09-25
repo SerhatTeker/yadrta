@@ -33,7 +33,7 @@ _django rest api_
     * [Login](#login)
   * [API v1](#api-v1)
     * [Sample API Responses](#sample-api-responses)
-* [Test](#test)
+* [Testing](#testing)
 * [Versioning](#versioning)
 * [Authors](#authors)
 * [License](#license)
