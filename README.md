@@ -324,7 +324,13 @@ After those you will get below _todo sample api response_:
 }
 ```
 
-## Test
+## Testing
+
+To run tests:
+
+```bash
+$ pytest
+```
 
 ## Versioning
 
