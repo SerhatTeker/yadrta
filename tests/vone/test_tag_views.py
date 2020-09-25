@@ -1,28 +1,12 @@
-from uuid import UUID
-
 from django.urls import reverse
 from faker import Faker
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from src.vone.models import Tag
-from tests.vone.factories import TagFactory
+from .factories import TagFactory
+from .utils import user_id_to_hex
 
 fake = Faker()
-
-
-def user_id_to_hex(uuid: str) -> str:
-    """
-    Turn uuid4 with hashes to hex:
-    From    :  8791f25b-d4ca-4f10-8f60-407a507edefe
-    To      :  8791f25bd4ca4f108f60407a507edefe
-    """
-
-    return UUID(uuid).hex
-
-
-# Tag
-# ------------------------------------------------------------------------------
 
 
 class TestTagListView(APITestCase):
