@@ -28,3 +28,6 @@ createsuperuser-default:
 # Create a SECRET_KEY for settings
 createsecret:
 	@python manage.py shell -c 'from django.core.management import utils; print(utils.get_random_secret_key())'
+pytest:
+	pytest tests/vone/test_views.py::TestTagDetailView
+	# pytest tests/vone/test_views.py::TestTagCreateAPIView
