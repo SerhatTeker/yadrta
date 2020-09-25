@@ -98,18 +98,6 @@ class TestTagDetailView(APITestCase):
     def api_authentication(self):
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.user.auth_token}")
 
-    def _test_get_request_returns_a_given_tag(self):
-        payload = {"name": self.tag.name, "created_by": self.user.pk}
-        response = self.client.post(self.url, payload)
-        print(f"response __dict__: {response.__dict__}")
-        print(f"response content: {response.content}")
-        print(f"response data: {response.data}")
-
-        tag = Tag.objects.filter(name=response.data.get("name"))
-        print(f"tag: {tag}")
-        print(f"tag.name: {tag.name}")
-        self.assertEqual(tag.name, self.tag.name)
-
     def set_response(self):
         payload = {"name": self.tag.name, "created_by": self.user.pk}
         return self.client.post(self.url, payload)
