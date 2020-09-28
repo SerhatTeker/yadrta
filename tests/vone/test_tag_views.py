@@ -1,6 +1,6 @@
 import logging
 
-# import factory
+import factory
 from django.urls import reverse
 from faker import Faker
 from rest_framework import status
@@ -8,12 +8,42 @@ from rest_framework.test import APITestCase
 
 # from src.users.models import User
 from src.vone.models import Tag
+from tests.users.factories import UserFactory
 
 from .factories import TagFactory
 from .utils import user_id_to_hex
 
 fake = Faker()
 LOGGER = logging.getLogger(__name__)
+
+
+class BaseTestClass(APITestCase):
+    def setUp(self):
+        # User
+        self.user = UserFactory()
+        self.api_authentication()
+        self.model = "tag"
+        # Tag
+        self.url = reverse(f"{self.model}-list")
+        self.tag_data = factory.build(dict, FACTORY_CLASS=TagFactory)
+        self.url_detail = reverse(f"{self.model}-detail", kwargs={"pk": self.tag_data.get("id")})
+        # API
+        self.payload = None
+        self.response = None
+
+    def api_authentication(self):
+        self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.user.auth_token}")
+
+    def get_payload(self):
+        payload = {"name": self.tag_data.get("name"), "created_by": self.user.pk}
+
+        return payload
+
+    def get_response(self, url=None):
+        if not url:
+            url = self.url
+
+        return self.client.get(url)
 
 
 class TestTagListAPIView(APITestCase):
@@ -69,7 +99,8 @@ class TestTagDetailAPIView(APITestCase):
     def setUp(self):
         # Tag
         self.url = reverse("tag-list")
-        self.tag = TagFactory()
+        self.user = UserFactory()
+        self.tag = factory.build(dict, FACTORY_CLASS=TagFactory)
         self.url_detail = reverse("tag-detail", kwargs={"pk": self.tag.pk})
         # User
         self.user = self.tag.created_by
@@ -123,10 +154,22 @@ class TestTagDetailAPIView(APITestCase):
         self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code)
 
     def test_bulk_tag_create(self):
-        second_tag = TagFactory()
-        self._set_response(name=second_tag.name, created_by=second_tag.created_by.pk)
-        third_tag = TagFactory()
-        self._set_response(name=third_tag.name, created_by=third_tag.created_by.pk)
+        # create 2 another new tags
+        TagFactory.create_batch(2)
         response = self.get_response()
         LOGGER.info(f"responses count: {response.data.get('count')}")
         self.assertGreaterEqual(response.data.get("count"), 2)
+
+
+class TestTrialBaseTestClass(BaseTestClass):
+    def setUp(self):
+        super(self.__class__, self).setUp()
+        self.payload = self.get_payload()
+
+    def test_post_request_with_valid_data_succeeds(self):
+        response = self.client.post(self.url, self.payload)
+        self.assertEqual(status.HTTP_201_CREATED, response.status_code)
+
+    def test_post_request_tag_name(self):
+        response = self.client.post(self.url, self.payload)
+        self.assertEqual(self.tag_data.get("name"), response.data.get("name"))
