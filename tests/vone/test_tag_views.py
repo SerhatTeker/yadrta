@@ -1,10 +1,12 @@
 import logging
 
+# import factory
 from django.urls import reverse
 from faker import Faker
 from rest_framework import status
 from rest_framework.test import APITestCase
 
+# from src.users.models import User
 from src.vone.models import Tag
 
 from .factories import TagFactory
@@ -79,21 +81,24 @@ class TestTagDetailAPIView(APITestCase):
     def api_authentication(self):
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.user.auth_token}")
 
+    def get_response(self):
+        return self.client.get(self.url)
+
     def set_payload(self):
         return {"name": self.tag.name, "created_by": self.user.pk}
 
-    def _set_response(self, url, payload=None, name=None, created_by=None):
+    def _set_response(self, payload=None, name=None, created_by=None):
         if not payload:
             payload = {"name": name, "created_by": created_by}
 
-        return self.client.post(url, payload)
+        return self.client.post(self.url, payload)
 
     def set_response(self):
         """Default response for cls"""
-        response = self._set_response(url=self.url, payload=self.payload)
+        response = self._set_response(payload=self.payload)
         return response
 
-    def test_get_request_returns_a_givzen_tag(self):
+    def test_get_request_returns_a_given_tag(self):
         self.assertEqual(self.response.data.get("name"), self.tag.name)
 
     def test_get_request_returns_user_id(self):
@@ -107,7 +112,21 @@ class TestTagDetailAPIView(APITestCase):
         self.assertEqual(response.data.get("name"), tag.name)
 
     def test_tag_object_delete(self):
-        # LOGGER.info(f"response before delete: {self.response}")
+        # LOGGER.info(f"self response data before delete: {self.response.data}")
+        # response = self.client.get(self.url)
+        # LOGGER.info(f"---response data before delete: {response.data}")
+        # LOGGER.info(f"responses name: {self.response.data.get('name')}")
+        # LOGGER.info(f"responses count: {self.response.data.get('count')}")
         response = self.client.delete(self.url_detail)
         # LOGGER.info(f"response after delete: {response}")
+        # LOGGER.info(f"responses count: {self.response.data.get('count')}")
         self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code)
+
+    def test_bulk_tag_create(self):
+        second_tag = TagFactory()
+        self._set_response(name=second_tag.name, created_by=second_tag.created_by.pk)
+        third_tag = TagFactory()
+        self._set_response(name=third_tag.name, created_by=third_tag.created_by.pk)
+        response = self.get_response()
+        LOGGER.info(f"responses count: {response.data.get('count')}")
+        self.assertGreaterEqual(response.data.get("count"), 2)
