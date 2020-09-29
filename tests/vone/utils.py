@@ -19,17 +19,17 @@ def user_id_to_hex(uuid: str) -> str:
 
 class APIClientUtils:
     def set_url(self):
-        self.url = reverse(f"{self.model}-list")
+        self.url = reverse(f"{self.model_str}-list")
 
     def set_url_list(self):
-        self.url_list = reverse(f"{self.model}-list")
+        self.url_list = reverse(f"{self.model_str}-list")
 
     def get_model_url_list(self):
-        return reverse(f"{self.model}-list")
+        return reverse(f"{self.model_str}-list")
 
     def _set_payload(self, name=None, created_by=None):
         if name and created_by is None:
-            name = self.tag_data.get("name")
+            name = self.model_data.get("name")
             created_by = self.user.pk
 
         payload = {"name": name, "created_by": created_by}
@@ -38,8 +38,8 @@ class APIClientUtils:
 
     def set_payload(self):
         """Default payload for cls"""
-        # payload = {"name": self.tag_data.get("name"), "created_by": self.user.pk}
-        name = self.tag_data.get("name")
+        # payload = {"name": self.mode_data.get("name"), "created_by": self.user.pk}
+        name = self.model_data.get("name")
         created_by = self.user.pk
 
         return self._set_payload(name=name, created_by=created_by)
@@ -62,5 +62,5 @@ class APIClientUtils:
         return response
 
     def get_obj_url(self, object_pk):
-        """Use self.tag_data if exists otherwise use self.tag"""
-        return reverse(f"{self.model}-detail", kwargs={"pk": object_pk})
+        """Get object detail url"""
+        return reverse(f"{self.model_str}-detail", kwargs={"pk": object_pk})
