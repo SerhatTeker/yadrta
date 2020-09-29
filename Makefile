@@ -10,9 +10,9 @@ runserver:
 allmigrations: migrations migrate
 
 migrate:
-	./manage.py migrate
+	python manage.py migreate
 migrations:
-	./manage.py makemigrations
+	python manage.py makemigrations
 
 # Create a super user from env var
 # You need to define an env var : DJANGO_DEV_ADMIN. Example below
@@ -27,10 +27,11 @@ createsuperuser-default:
 
 # Create a SECRET_KEY for settings
 createsecret:
+	@echo "Creating SECRET_KEY"
 	@python manage.py shell -c 'from django.core.management import utils; print(utils.get_random_secret_key())'
 
 django-shell:
-	@python manage.py shell -i ipython
+	python manage.py shell -i ipython
 
 pytest:
 	pytest tests/vone/test_category_views.py
