@@ -8,6 +8,7 @@ class Category(BaseModelMixin):
 
     class Meta:
         verbose_name_plural = "Categories"
+        ordering = ("name",)
 
     def __str__(self):
         return self.name
@@ -15,6 +16,9 @@ class Category(BaseModelMixin):
 
 class Tag(BaseModelMixin):
     name = models.CharField(max_length=200, blank=False, verbose_name="Tag Name")
+
+    class Meta:
+        ordering = ("name",)
 
     def __str__(self):
         return self.name
@@ -34,6 +38,9 @@ class Task(BaseModelMixin):
     status = models.CharField(max_length=15, choices=STATES, default="todo")
     tag = models.ForeignKey(to=Tag, on_delete=models.DO_NOTHING)
     category = models.ForeignKey(to=Category, on_delete=models.DO_NOTHING)
+
+    class Meta:
+        ordering = ("title",)
 
     def __str__(self):
         return f"{self.created_by}:{self.title}"
