@@ -1,7 +1,6 @@
 import logging
 
 import factory
-from django.urls import reverse
 from faker import Faker
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -11,7 +10,7 @@ from src.vone.models import Tag
 from tests.users.factories import UserFactory
 
 from .factories import TagFactory
-from .utils import user_id_to_hex
+from .utils import user_id_to_hex, APIClientUtils
 
 fake = Faker()
 LOGGER = logging.getLogger(__name__)
@@ -26,8 +25,6 @@ class BaseTestClass(APITestCase):
         # TagFactory : obj
         self.factory_class = TagFactory
         # Model
-        self.url = reverse(f"{self.model}-list")
-        self.url_list = reverse(f"{self.model}-list")
         self.tag_data = factory.build(dict, FACTORY_CLASS=self.factory_class)
         # API
         self.payload = None
@@ -35,46 +32,6 @@ class BaseTestClass(APITestCase):
 
     def api_authentication(self):
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.user.auth_token}")
-
-
-class APIClientUtils:
-    def _set_payload(self, name=None, created_by=None):
-        if name and created_by is None:
-            name = self.tag_data.get("name")
-            created_by = self.user.pk
-
-        payload = {"name": name, "created_by": created_by}
-
-        return payload
-
-    def set_payload(self):
-        """Default payload for cls"""
-        # payload = {"name": self.tag_data.get("name"), "created_by": self.user.pk}
-        name = self.tag_data.get("name")
-        created_by = self.user.pk
-
-        return self._set_payload(name=name, created_by=created_by)
-
-    def client_get(self, url=None):
-        if not url:
-            url = self.url
-
-        return self.client.get(url)
-
-    def client_post(self, url=None, payload=None):
-        response = None
-
-        if url and payload is None:
-            url = self.url
-            payload = self.payload
-
-        response = self.client.post(self.url, self.payload)
-
-        return response
-
-    def get_obj_url(self, object_pk):
-        """Use self.tag_data if exists otherwise use self.tag"""
-        return reverse(f"{self.model}-detail", kwargs={"pk": object_pk})
 
 
 class TestTagListAPIView(BaseTestClass, APIClientUtils):
@@ -86,6 +43,8 @@ class TestTagListAPIView(BaseTestClass, APIClientUtils):
         super(self.__class__, self).setUp()
         self.user = UserFactory()
         self.api_authentication()
+        self.set_url()
+        self.set_url_list()
         self.payload = self.set_payload()
         self.response = self.client_post()
 
@@ -112,7 +71,7 @@ class TestTagDetailAPIView(BaseTestClass, APIClientUtils):
     def setUp(self):
         super(self.__class__, self).setUp()
         self.tag = TagFactory()
-        LOGGER.info(f"tag: {self.tag}")
+        # LOGGER.info(f"tag: {self.tag}")
         self.user = self.tag.created_by
         self.api_authentication()
         self.url = self.get_obj_url(object_pk=self.tag.id)
