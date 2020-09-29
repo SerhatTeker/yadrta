@@ -22,11 +22,16 @@ class BaseTestClass(APITestCase):
         # User
         self.user = UserFactory()
         self.api_authentication()
+        # "tag" : str
         self.model = "tag"
-        # Tag
+        # TagFactory : obj
+        self.factory_class = TagFactory
+        # Model
         self.url = reverse(f"{self.model}-list")
-        self.tag_data = factory.build(dict, FACTORY_CLASS=TagFactory)
-        self.url_detail = reverse(f"{self.model}-detail", kwargs={"pk": self.tag_data.get("id")})
+        self.tag_data = factory.build(dict, FACTORY_CLASS=self.factory_class)
+        self.url_detail = reverse(
+            f"{self.model}-detail", kwargs={"pk": self.tag_data.get("id")}
+        )
         # API
         self.payload = None
         self.response = None
@@ -34,16 +39,39 @@ class BaseTestClass(APITestCase):
     def api_authentication(self):
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.user.auth_token}")
 
-    def get_payload(self):
-        payload = {"name": self.tag_data.get("name"), "created_by": self.user.pk}
+    def _set_payload(self, name=None, created_by=None):
+        if name and created_by is None:
+            name = self.tag_data.get("name")
+            created_by = self.user.pk
+
+        payload = {"name": name, "created_by": created_by}
 
         return payload
 
-    def get_response(self, url=None):
+    def set_payload(self):
+        """Default payload for cls"""
+        # payload = {"name": self.tag_data.get("name"), "created_by": self.user.pk}
+        name = self.tag_data.get("name")
+        created_by = self.user.pk
+
+        return self._set_payload(name=name, created_by=created_by)
+
+    def client_get(self, url=None):
         if not url:
             url = self.url
 
         return self.client.get(url)
+
+    def client_post(self, url=None, payload=None):
+        response = None
+
+        if url and payload is None:
+            url = self.url
+            payload = self.payload
+
+        response = self.client.post(self.url, self.payload)
+
+        return response
 
 
 class TestTagListAPIView(APITestCase):
@@ -91,43 +119,15 @@ class TestTagCreateAPIView(APITestCase):
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
 
 
-class TestTagDetailAPIView(APITestCase):
+class TestTagDetailAPIView(BaseTestClass):
     """
     Tests /tag detail operations.
     """
 
     def setUp(self):
-        # Tag
-        self.url = reverse("tag-list")
-        self.user = UserFactory()
-        self.tag = factory.build(dict, FACTORY_CLASS=TagFactory)
-        self.url_detail = reverse("tag-detail", kwargs={"pk": self.tag.pk})
-        # User
-        self.user = self.tag.created_by
-        self.api_authentication()
-        # API
+        super(self.__class__, self).setUp()
         self.payload = self.set_payload()
-        self.response = self.set_response()
-
-    def api_authentication(self):
-        self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.user.auth_token}")
-
-    def get_response(self):
-        return self.client.get(self.url)
-
-    def set_payload(self):
-        return {"name": self.tag.name, "created_by": self.user.pk}
-
-    def _set_response(self, payload=None, name=None, created_by=None):
-        if not payload:
-            payload = {"name": name, "created_by": created_by}
-
-        return self.client.post(self.url, payload)
-
-    def set_response(self):
-        """Default response for cls"""
-        response = self._set_response(payload=self.payload)
-        return response
+        self.response = self.client_post()
 
     def test_get_request_returns_a_given_tag(self):
         self.assertEqual(self.response.data.get("name"), self.tag.name)
@@ -143,20 +143,13 @@ class TestTagDetailAPIView(APITestCase):
         self.assertEqual(response.data.get("name"), tag.name)
 
     def test_tag_object_delete(self):
-        # LOGGER.info(f"self response data before delete: {self.response.data}")
-        # response = self.client.get(self.url)
-        # LOGGER.info(f"---response data before delete: {response.data}")
-        # LOGGER.info(f"responses name: {self.response.data.get('name')}")
-        # LOGGER.info(f"responses count: {self.response.data.get('count')}")
         response = self.client.delete(self.url_detail)
-        # LOGGER.info(f"response after delete: {response}")
-        # LOGGER.info(f"responses count: {self.response.data.get('count')}")
         self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code)
 
     def test_bulk_tag_create(self):
         # create 2 another new tags
-        TagFactory.create_batch(2)
-        response = self.get_response()
+        self.factory_class.create_batch(2)
+        response = self.client_get()
         LOGGER.info(f"responses count: {response.data.get('count')}")
         self.assertGreaterEqual(response.data.get("count"), 2)
 
@@ -164,7 +157,7 @@ class TestTagDetailAPIView(APITestCase):
 class TestTrialBaseTestClass(BaseTestClass):
     def setUp(self):
         super(self.__class__, self).setUp()
-        self.payload = self.get_payload()
+        self.payload = self.set_payload()
 
     def test_post_request_with_valid_data_succeeds(self):
         response = self.client.post(self.url, self.payload)
