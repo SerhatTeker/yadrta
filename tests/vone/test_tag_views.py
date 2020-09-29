@@ -20,14 +20,14 @@ LOGGER = logging.getLogger(__name__)
 class BaseTestClass(APITestCase):
     def setUp(self):
         # User
-        self.user = UserFactory()
-        self.api_authentication()
+        self.user = None
         # "tag" : str
         self.model = "tag"
         # TagFactory : obj
         self.factory_class = TagFactory
         # Model
         self.url = reverse(f"{self.model}-list")
+        self.url_list = reverse(f"{self.model}-list")
         self.tag_data = factory.build(dict, FACTORY_CLASS=self.factory_class)
         # API
         self.payload = None
@@ -36,6 +36,8 @@ class BaseTestClass(APITestCase):
     def api_authentication(self):
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.user.auth_token}")
 
+
+class APIClientUtils:
     def _set_payload(self, name=None, created_by=None):
         if name and created_by is None:
             name = self.tag_data.get("name")
@@ -70,17 +72,20 @@ class BaseTestClass(APITestCase):
 
         return response
 
-    def get_obj_url_detail(self):
-        return reverse(f"{self.model}-detail", kwargs={"pk": self.tag_data.get("id")})
+    def get_obj_url(self, object_pk):
+        """Use self.tag_data if exists otherwise use self.tag"""
+        return reverse(f"{self.model}-detail", kwargs={"pk": object_pk})
 
 
-class TestTagListAPIView(BaseTestClass):
+class TestTagListAPIView(BaseTestClass, APIClientUtils):
     """
     Tests /tag detail operations.
     """
 
     def setUp(self):
         super(self.__class__, self).setUp()
+        self.user = UserFactory()
+        self.api_authentication()
         self.payload = self.set_payload()
         self.response = self.client_post()
 
@@ -99,38 +104,40 @@ class TestTagListAPIView(BaseTestClass):
         self.assertGreaterEqual(response.data.get("count"), 3)
 
 
-class TestTagDetailAPIView(BaseTestClass):
+class TestTagDetailAPIView(BaseTestClass, APIClientUtils):
     """
-    Tests /tag list operations.
+    Tests /tag detail operations.
     """
 
     def setUp(self):
-        self.url = reverse("tag-list")
+        super(self.__class__, self).setUp()
         self.tag = TagFactory()
+        LOGGER.info(f"tag: {self.tag}")
         self.user = self.tag.created_by
         self.api_authentication()
-
-    def api_authentication(self):
-        self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.user.auth_token}")
+        self.url = self.get_obj_url(object_pk=self.tag.id)
 
     def test_get_request_returns_a_given_tag(self):
-        self.assertEqual(self.response.data.get("name"), self.tag_data.get("name"))
+        # From APIClient
+        response_obj_name = self.client_get().data.get("name")
+        # From factory_class
+        obj_name = self.tag.name
+        self.assertEqual(response_obj_name, obj_name)
 
     def test_get_request_returns_user_id(self):
-        self.assertEqual(
-            self.response.data.get("created_by").hex, user_id_to_hex(self.user.id)
-        )
+        user_hex = self.client_get().data.get("created_by").hex
+        user_id = user_id_to_hex(self.user.id)
+        self.assertEqual(user_hex, user_id)
 
     def test_tag_object_update(self):
-        LOGGER.info(f"get_obj_url_detail: {self.get_obj_url_detail()}")
-        name = fake.name()
-        payload = {"name": name}
+        name = fake.word()
+        payload = self._set_payload(name=name, created_by=self.user.id)
         response = self.client.put(self.url, payload)
-        response = self.client.put(self.get_obj_url_detail(), payload)
-        LOGGER.info(f"responses: {response.data}")
-        tag = Tag.objects.get(id=self.tag_data.get("id"))
-        self.assertEqual(response.data.get("name"), tag.name)
+        response_data = response.data.get("name")
+
+        tag = Tag.objects.get(id=self.tag.id)
+        self.assertEqual(response_data, tag.name)
 
     def test_tag_object_delete(self):
-        response = self.client.delete(self.get_obj_url_detail())
+        response = self.client.delete(self.url)
         self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code)
