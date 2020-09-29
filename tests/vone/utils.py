@@ -24,6 +24,9 @@ class APIClientUtils:
     def set_url_list(self):
         self.url_list = reverse(f"{self.model}-list")
 
+    def get_model_url_list(self):
+        return reverse(f"{self.model}-list")
+
     def _set_payload(self, name=None, created_by=None):
         if name and created_by is None:
             name = self.tag_data.get("name")

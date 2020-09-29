@@ -43,8 +43,7 @@ class TestTagListAPIView(BaseTestClass, APIClientUtils):
         super(self.__class__, self).setUp()
         self.user = UserFactory()
         self.api_authentication()
-        self.set_url()
-        self.set_url_list()
+        self.url = self.get_model_url_list()
         self.payload = self.set_payload()
         self.response = self.client_post()
 
