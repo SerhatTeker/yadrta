@@ -29,9 +29,6 @@ class BaseTestClass(APITestCase):
         # Model
         self.url = reverse(f"{self.model}-list")
         self.tag_data = factory.build(dict, FACTORY_CLASS=self.factory_class)
-        self.url_detail = reverse(
-            f"{self.model}-detail", kwargs={"pk": self.tag_data.get("id")}
-        )
         # API
         self.payload = None
         self.response = None
@@ -73,8 +70,36 @@ class BaseTestClass(APITestCase):
 
         return response
 
+    def get_obj_url_detail(self):
+        return reverse(f"{self.model}-detail", kwargs={"pk": self.tag_data.get("id")})
 
-class TestTagListAPIView(APITestCase):
+
+class TestTagListAPIView(BaseTestClass):
+    """
+    Tests /tag detail operations.
+    """
+
+    def setUp(self):
+        super(self.__class__, self).setUp()
+        self.payload = self.set_payload()
+        self.response = self.client_post()
+
+    def test_post_request_with_no_data_fails(self):
+        payload = {}
+        response = self.client.post(self.url, payload)
+        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
+
+    def test_post_request_with_valid_data_succeeds(self):
+        self.assertEqual(status.HTTP_201_CREATED, self.response.status_code)
+
+    def test_bulk_tag_create(self):
+        # create 2 another new tags
+        self.factory_class.create_batch(2)
+        response = self.client_get()
+        self.assertGreaterEqual(response.data.get("count"), 3)
+
+
+class TestTagDetailAPIView(BaseTestClass):
     """
     Tests /tag list operations.
     """
@@ -88,49 +113,8 @@ class TestTagListAPIView(APITestCase):
     def api_authentication(self):
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.user.auth_token}")
 
-    def test_post_request_with_no_data_fails(self):
-        payload = {}
-        response = self.client.post(self.url, payload)
-        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
-
-    def test_post_request_with_valid_data_succeeds(self):
-        payload = {"name": "newthing", "created_by": self.user.pk}
-        response = self.client.post(self.url, payload)
-        self.assertEqual(status.HTTP_201_CREATED, response.status_code)
-
-
-class TestTagCreateAPIView(APITestCase):
-    """
-    Tests /tag create operations.
-    """
-
-    def setUp(self):
-        self.url = reverse("tag-list")
-        self.tag = TagFactory()
-        self.user = self.tag.created_by
-        self.api_authentication()
-
-    def api_authentication(self):
-        self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.user.auth_token}")
-
-    def test_create_tag(self):
-        payload = {"name": self.tag.name, "created_by": self.user.pk}
-        response = self.client.post(self.url, payload)
-        self.assertEqual(status.HTTP_201_CREATED, response.status_code)
-
-
-class TestTagDetailAPIView(BaseTestClass):
-    """
-    Tests /tag detail operations.
-    """
-
-    def setUp(self):
-        super(self.__class__, self).setUp()
-        self.payload = self.set_payload()
-        self.response = self.client_post()
-
     def test_get_request_returns_a_given_tag(self):
-        self.assertEqual(self.response.data.get("name"), self.tag.name)
+        self.assertEqual(self.response.data.get("name"), self.tag_data.get("name"))
 
     def test_get_request_returns_user_id(self):
         self.assertEqual(
@@ -138,31 +122,15 @@ class TestTagDetailAPIView(BaseTestClass):
         )
 
     def test_tag_object_update(self):
-        response = self.client.put(self.url_detail, self.payload)
-        tag = Tag.objects.get(id=self.tag.id)
+        LOGGER.info(f"get_obj_url_detail: {self.get_obj_url_detail()}")
+        name = fake.name()
+        payload = {"name": name}
+        response = self.client.put(self.url, payload)
+        response = self.client.put(self.get_obj_url_detail(), payload)
+        LOGGER.info(f"responses: {response.data}")
+        tag = Tag.objects.get(id=self.tag_data.get("id"))
         self.assertEqual(response.data.get("name"), tag.name)
 
     def test_tag_object_delete(self):
-        response = self.client.delete(self.url_detail)
+        response = self.client.delete(self.get_obj_url_detail())
         self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code)
-
-    def test_bulk_tag_create(self):
-        # create 2 another new tags
-        self.factory_class.create_batch(2)
-        response = self.client_get()
-        LOGGER.info(f"responses count: {response.data.get('count')}")
-        self.assertGreaterEqual(response.data.get("count"), 2)
-
-
-class TestTrialBaseTestClass(BaseTestClass):
-    def setUp(self):
-        super(self.__class__, self).setUp()
-        self.payload = self.set_payload()
-
-    def test_post_request_with_valid_data_succeeds(self):
-        response = self.client.post(self.url, self.payload)
-        self.assertEqual(status.HTTP_201_CREATED, response.status_code)
-
-    def test_post_request_tag_name(self):
-        response = self.client.post(self.url, self.payload)
-        self.assertEqual(self.tag_data.get("name"), response.data.get("name"))
