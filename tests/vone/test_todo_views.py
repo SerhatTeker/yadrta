@@ -92,12 +92,8 @@ class TestTaskDetailAPIView(BaseTestClass, APIClientUtils):
 
     def test_task_object_update(self):
         payload = {"title": fake.word(), "created_by": self.user.id}
-        LOGGER.info(f"payload: {payload}")
         response = self.client.put(self.url, payload)
         response_data = response.data.get("title")
-        LOGGER.info(f"response: {response}")
-        LOGGER.info(f"response.__dict__: {response.__dict__}")
-        LOGGER.info(f"response_data: {response_data}")
 
         task = Task.objects.get(id=self.task.id)
         self.assertEqual(response_data, task.title)
