@@ -34,6 +34,7 @@ django-shell:
 	python manage.py shell -i ipython
 
 pytest:
-	pytest tests/vone/test_category_views.py
+	pytest tests/vone/test_todo_views.py
+	# pytest tests/vone/test_category_views.py
 	# pytest tests/vone/test_tag_views.py
 	# pytest tests/vone/test_category_views.py::TestTagDetailAPIView
