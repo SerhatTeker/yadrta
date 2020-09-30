@@ -88,6 +88,21 @@ class TestTaskDetailAPIView(BaseTestClass, APIClientUtils):
         self.assertEqual(user_hex, user_id)
 
     def test_task_object_update(self):
+        payload = {
+            "title": fake.word(),
+            "description": fake.sentence(),
+            "created_by": self.user.id,
+            "status": "waiting",
+            "tag": TagFactory().pk,
+            "category": CategoryFactory().pk,
+        }
+        response = self.client.put(self.url, payload)
+        response_data = response.data.get("title")
+
+        task = Task.objects.get(id=self.task.id)
+        self.assertEqual(response_data, task.title)
+
+    def test_task_object_partial_update(self):
         payload = {"title": fake.word(), "created_by": self.user.id}
         response = self.client.put(self.url, payload)
         response_data = response.data.get("title")
