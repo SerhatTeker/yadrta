@@ -1,7 +1,4 @@
-import logging
-
 import factory
-from faker import Faker
 from rest_framework import status
 from rest_framework.test import APITestCase
 
@@ -9,11 +6,8 @@ from rest_framework.test import APITestCase
 from src.vone.models import Category
 from tests.users.factories import UserFactory
 
-from .factories import CategoryFactory
+from .factories import CategoryFactory, fake
 from .utils import user_id_to_hex, APIClientUtils
-
-fake = Faker()
-LOGGER = logging.getLogger(__name__)
 
 
 class BaseTestClass(APITestCase):
