@@ -38,7 +38,7 @@ class TestTaskListAPIView(BaseTestClass, APIClientUtils):
 
     def setUp(self):
         super(self.__class__, self).setUp()
-        # Overwrite Task related fields
+        # Overwrite Task related fields in set_todo_payload
         self.user = UserFactory()
         self.api_authentication()
         self.tag = TagFactory()
@@ -71,11 +71,8 @@ class TestTaskDetailAPIView(BaseTestClass, APIClientUtils):
     def setUp(self):
         super(self.__class__, self).setUp()
         self.task = TaskFactory()
-        # LOGGER.info(f"task: {self.task}")
         self.user = self.task.created_by
         self.api_authentication()
-        self.tag = TagFactory()
-        self.category = CategoryFactory()
         self.url = self.get_obj_url(object_pk=self.task.id)
 
     def test_get_request_returns_a_given_task(self):
