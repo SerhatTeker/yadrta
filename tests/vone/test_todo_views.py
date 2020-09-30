@@ -8,8 +8,8 @@ from rest_framework.test import APITestCase
 from src.vone.models import Task
 from tests.users.factories import UserFactory
 
-from .factories import TaskFactory, fake
-from .utils import user_id_to_hex, APIClientUtils
+from .factories import CategoryFactory, TagFactory, TaskFactory, fake
+from .utils import APIClientUtils, user_id_to_hex
 
 LOGGER = logging.getLogger(__name__)
 
@@ -39,10 +39,14 @@ class TestTaskListAPIView(BaseTestClass, APIClientUtils):
 
     def setUp(self):
         super(self.__class__, self).setUp()
+        # Overwrite Task related fields
         self.user = UserFactory()
         self.api_authentication()
+        self.tag = TagFactory()
+        self.category = CategoryFactory()
+        # ------------------------------------------------==
         self.url = self.get_model_url_list()
-        self.payload = self.set_payload()
+        self.payload = self.set_todo_payload()
         self.response = self.client_post()
 
     def test_post_request_with_no_data_fails(self):

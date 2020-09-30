@@ -44,6 +44,26 @@ class APIClientUtils:
 
         return self._set_payload(name=name, created_by=created_by)
 
+    def set_todo_payload(self):
+        """Default payload for todo model"""
+        title = self.model_data.get("title")
+        description = self.model_data.get("description")
+        created_by = self.user.pk
+        status = self.model_data.get("status")
+        tag = self.tag.pk
+        category = self.category.pk
+
+        payload = {
+            "title": title,
+            "description": description,
+            "created_by": created_by,
+            "status": status,
+            "tag": tag,
+            "category": category,
+        }
+
+        return payload
+
     def client_get(self, url=None):
         if not url:
             url = self.url
