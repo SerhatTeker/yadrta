@@ -2,8 +2,9 @@ from django.http import HttpResponseRedirect
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions, viewsets
-from rest_framework.response import Response
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+
+from src.core.utils.views import EnablePartialUpdateMixin
 
 from .models import Category, Tag, Task
 from .serializers import CategorySerializer, TagSerializer, TaskSerializer
@@ -44,16 +45,9 @@ class TagViewSet(viewsets.ModelViewSet):
     serializer_class = TagSerializer
 
 
-class TodoViewSet(viewsets.ModelViewSet):
+class TodoViewSet(EnablePartialUpdateMixin, viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
-
-    def update(self, request, *args, **kwargs):
-        # Enable partial updates
-        # Override partial kwargs in UpdateModelMixin class
-        # https://github.com/encode/django-rest-framework/blob/91916a4db14cd6a06aca13fb9a46fc667f6c0682/rest_framework/mixins.py#L64
-        kwargs['partial'] = True
-        return super().update(request, *args, **kwargs)
 
 
 # OpenAPI schema
