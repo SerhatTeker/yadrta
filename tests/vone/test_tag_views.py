@@ -1,17 +1,12 @@
-import logging
-
 import factory
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-# from src.users.models import User
+from src.core.utils.tests import APIClientUtils, user_id_to_hex
 from src.vone.models import Tag
 from tests.users.factories import UserFactory
 
 from .factories import TagFactory, fake
-from .utils import user_id_to_hex, APIClientUtils
-
-LOGGER = logging.getLogger(__name__)
 
 
 class BaseTestClass(APITestCase):

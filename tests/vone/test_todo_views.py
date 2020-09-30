@@ -4,12 +4,11 @@ import factory
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-# from src.users.models import User
+from src.core.utils.tests import APIClientUtils, user_id_to_hex
 from src.vone.models import Task
 from tests.users.factories import UserFactory
 
 from .factories import CategoryFactory, TagFactory, TaskFactory, fake
-from .utils import APIClientUtils, user_id_to_hex
 
 LOGGER = logging.getLogger(__name__)
 
@@ -75,13 +74,15 @@ class TestTaskDetailAPIView(BaseTestClass, APIClientUtils):
         # LOGGER.info(f"task: {self.task}")
         self.user = self.task.created_by
         self.api_authentication()
+        self.tag = TagFactory()
+        self.category = CategoryFactory()
         self.url = self.get_obj_url(object_pk=self.task.id)
 
     def test_get_request_returns_a_given_task(self):
         # From APIClient
-        response_obj_name = self.client_get().data.get("name")
+        response_obj_name = self.client_get().data.get("title")
         # From factory_class
-        obj_name = self.task.name
+        obj_name = self.task.title
         self.assertEqual(response_obj_name, obj_name)
 
     def test_get_request_returns_user_id(self):
@@ -90,13 +91,16 @@ class TestTaskDetailAPIView(BaseTestClass, APIClientUtils):
         self.assertEqual(user_hex, user_id)
 
     def test_task_object_update(self):
-        name = fake.word()
-        payload = self._set_payload(name=name, created_by=self.user.id)
+        payload = {"title": fake.word(), "created_by": self.user.id}
+        LOGGER.info(f"payload: {payload}")
         response = self.client.put(self.url, payload)
-        response_data = response.data.get("name")
+        response_data = response.data.get("title")
+        LOGGER.info(f"response: {response}")
+        LOGGER.info(f"response.__dict__: {response.__dict__}")
+        LOGGER.info(f"response_data: {response_data}")
 
         task = Task.objects.get(id=self.task.id)
-        self.assertEqual(response_data, task.name)
+        self.assertEqual(response_data, task.title)
 
     def test_task_object_delete(self):
         response = self.client.delete(self.url)

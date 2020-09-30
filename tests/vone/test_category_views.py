@@ -2,12 +2,11 @@ import factory
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-# from src.users.models import User
+from src.core.utils.tests import APIClientUtils, user_id_to_hex
 from src.vone.models import Category
 from tests.users.factories import UserFactory
 
 from .factories import CategoryFactory, fake
-from .utils import user_id_to_hex, APIClientUtils
 
 
 class BaseTestClass(APITestCase):
