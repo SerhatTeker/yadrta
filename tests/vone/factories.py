@@ -45,7 +45,7 @@ class TaskFactory(factory.django.DjangoModelFactory):
     changed_at = factory.Faker("date")
     created_by = factory.SubFactory(UserFactory)
     title = factory.Faker("word")
-    description = factory.Faker("word")
+    description = factory.Faker("sentence")
     status = fake.word(ext_word_list=STATES)
     tag = factory.SubFactory(TagFactory)
     category = factory.SubFactory(CategoryFactory)

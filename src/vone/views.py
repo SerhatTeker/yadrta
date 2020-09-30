@@ -4,6 +4,8 @@ from drf_yasg.views import get_schema_view
 from rest_framework import permissions, viewsets
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
+from src.core.utils.views import EnablePartialUpdateMixin
+
 from .models import Category, Tag, Task
 from .serializers import CategorySerializer, TagSerializer, TaskSerializer
 
@@ -43,7 +45,7 @@ class TagViewSet(viewsets.ModelViewSet):
     serializer_class = TagSerializer
 
 
-class TodoViewSet(viewsets.ModelViewSet):
+class TodoViewSet(EnablePartialUpdateMixin, viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 
