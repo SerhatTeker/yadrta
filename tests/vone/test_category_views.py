@@ -2,7 +2,7 @@ import factory
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from src.core.utils.tests import APIClientUtils, user_id_to_hex
+from src.core.utils.tests import APIClientMixin, user_id_to_hex
 from src.vone.models import Category
 from tests.users.factories import UserFactory
 
@@ -27,7 +27,7 @@ class BaseTestClass(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.user.auth_token}")
 
 
-class TestCategoryListAPIView(BaseTestClass, APIClientUtils):
+class TestCategoryListAPIView(BaseTestClass, APIClientMixin):
     """
     Tests /category detail operations.
     """
@@ -55,7 +55,7 @@ class TestCategoryListAPIView(BaseTestClass, APIClientUtils):
         self.assertGreaterEqual(response.data.get("count"), 3)
 
 
-class TestCategoryDetailAPIView(BaseTestClass, APIClientUtils):
+class TestCategoryDetailAPIView(BaseTestClass, APIClientMixin):
     """
     Tests /category detail operations.
     """

@@ -4,7 +4,7 @@ import factory
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from src.core.utils.tests import APIClientUtils, user_id_to_hex
+from src.core.utils.tests import APIClientMixin, user_id_to_hex
 from src.vone.models import Task
 from tests.users.factories import UserFactory
 
@@ -31,7 +31,7 @@ class BaseTestClass(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.user.auth_token}")
 
 
-class TestTaskListAPIView(BaseTestClass, APIClientUtils):
+class TestTaskListAPIView(BaseTestClass, APIClientMixin):
     """
     Tests /task detail operations.
     """
@@ -63,7 +63,7 @@ class TestTaskListAPIView(BaseTestClass, APIClientUtils):
         self.assertGreaterEqual(response.data.get("count"), 3)
 
 
-class TestTaskDetailAPIView(BaseTestClass, APIClientUtils):
+class TestTaskDetailAPIView(BaseTestClass, APIClientMixin):
     """
     Tests /task detail operations.
     """
