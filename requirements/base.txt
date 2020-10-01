@@ -16,3 +16,8 @@ djangorestframework==3.11.1
 Markdown==3.2.2
 django-filter==2.3.0
 drf-yasg==1.17.1 # OpenAPI
+
+# Developer Tools
+# ------------------------------------------------------------------------------
+mkdocs==1.1.2
+flake8==3.8.3
