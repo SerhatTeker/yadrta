@@ -34,3 +34,6 @@ class TaskSerializer(serializers.ModelSerializer):
             "tag",
             "category",
         ]
+        # nested representations
+        # https://www.django-rest-framework.org/api-guide/serializers/#specifying-nested-serialization
+        # depth = 1

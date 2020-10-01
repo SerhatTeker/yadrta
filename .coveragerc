@@ -1,10 +1,24 @@
+# Test coverage configuration.
+# Usage:
+#   pip install coverage
+#   1. coverage erase  # clears previous data if any
+#   2. coverage run -m pytest
+#   3. coverage report  # prints to stdout
+#   4. coverage html  # creates ./run/htmlcov/*.html including annotated source
+
 [run]
-branch = True
 omit = *migrations*,
-       *urls*,
-       *test*,
-       *admin*,
-       ./manage.py,
-       ./config/*,
-       ./config/wsgi.py,
-       *__init__*
+	*urls*,
+	*test*,
+	*admin*,
+	./.venv/*,
+	./manage.py,
+	./config/*,
+	*__init__*
+
+# [html]
+# directory = ./run/htmlcov
+
+# [coverage:report]
+# show_missing = True
+# skip_covered = True

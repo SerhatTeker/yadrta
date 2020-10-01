@@ -33,9 +33,11 @@ createsecret:
 django-shell:
 	python manage.py shell -i ipython
 
+coverage:
+	coverage erase
+	coverage run -m pytest
+	coverage report -m
+	coverage html
 pytest:
-	pytest tests/vone/test_todo_views.py::TestTaskDetailAPIView
-	# pytest tests/vone/test_todo_views.py::TestTaskListAPIView
-	# pytest tests/vone/test_category_views.py
-	# pytest tests/vone/test_tag_views.py
-	# pytest tests/vone/test_category_views.py::TestTagDetailAPIView
+	pytest tests/vone/test_serializers.py
+	# pytest tests/vone/test_serializers.py::TestTaskSerializer

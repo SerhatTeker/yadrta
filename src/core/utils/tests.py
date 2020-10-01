@@ -17,7 +17,7 @@ def user_id_to_hex(uuid: str) -> str:
     return UUID(uuid).hex
 
 
-class APIClientUtils:
+class APIClientMixin:
     def set_url(self):
         self.url = reverse(f"{self.model_str}-list")
 
@@ -84,4 +84,3 @@ class APIClientUtils:
     def get_obj_url(self, object_pk):
         """Get object detail url"""
         return reverse(f"{self.model_str}-detail", kwargs={"pk": object_pk})
-
