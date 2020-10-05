@@ -10,6 +10,10 @@ newrelic==5.18.0.148
 django-environ==0.4.5  # https://github.com/joke2k/django-environ
 django-redis==4.12.1  # https://github.com/jazzband/django-redis
 
+# Static and Media Storage
+# ------------------------------------------------------------------------------
+whitenoise==5.2.0  # https://github.com/evansd/whitenoise
+
 # Model Tools
 # ------------------------------------------------------------------------------
 django-model-utils==4.0.0
