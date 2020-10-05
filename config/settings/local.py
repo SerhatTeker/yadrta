@@ -6,6 +6,8 @@ from .base import *  # noqa
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = True
+# https://docs.djangoproject.com/en/dev/ref/settings/#templates
+TEMPLATES[-1]["APP_DIRS"] = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 SECRET_KEY = os.getenv(
     "DJANGO_SECRET_KEY",
