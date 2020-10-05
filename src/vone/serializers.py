@@ -1,20 +1,23 @@
 from rest_framework import serializers
 
+from src.core.utils.permissions import IsOwnerOrReadOnly
 from src.vone.models import Category, Tag, Task
 
 base_model_mixin_fields = ["uuid", "created_by", "created_at", "changed_at"]
 
 
 class CategorySerializer(serializers.ModelSerializer):
+    permission_classes = IsOwnerOrReadOnly
+
     class Meta:
         model = Category
-        fields = base_model_mixin_fields + ["name"]
+        fields = ["name", "pk"] + base_model_mixin_fields
 
 
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
-        fields = base_model_mixin_fields + ["name"]
+        fields = ["name", "pk"] + base_model_mixin_fields
 
 
 class TaskSerializer(serializers.ModelSerializer):
@@ -27,13 +30,14 @@ class TaskSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Task
-        fields = base_model_mixin_fields + [
+        fields = [
+            "pk",
             "title",
             "description",
             "status",
             "tag",
             "category",
-        ]
+        ] + base_model_mixin_fields
         # nested representations
         # https://www.django-rest-framework.org/api-guide/serializers/#specifying-nested-serialization
         # depth = 1

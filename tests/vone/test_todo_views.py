@@ -56,9 +56,16 @@ class TestTaskListAPIView(BaseTestClass, APIClientMixin):
     def test_post_request_with_valid_data_succeeds(self):
         self.assertEqual(status.HTTP_201_CREATED, self.response.status_code)
 
-    def test_bulk_task_create(self):
-        # create 2 another new tasks
+    def test_bulk_category_create_fail_with_different_user(self):
+        # create 2 another new categorys
         self.factory_class.create_batch(2)
+        response = self.client_get()
+        self.assertEqual(response.data.get("count"), 1)
+
+    def test_bulk_category_create(self):
+        # create 2 another new categorys
+        # self.factory_class.create_batch(2, craeted_by=self.user)
+        self.factory_class.create_batch(size=2, created_by=self.user)
         response = self.client_get()
         self.assertGreaterEqual(response.data.get("count"), 3)
 

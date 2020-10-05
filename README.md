@@ -1,5 +1,6 @@
 [![license](https://img.shields.io/badge/license-bsd%203--clause-blue.svg)](https://opensource.org/licenses/bsd-3-clause)
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+[![codecov.io](https://codecov.io/github/SerhatTeker/yadrta/coverage.svg?branch=master)](https://codecov.io/github/SerhatTeker/yadrta?branch=master)
 [![Build Status](https://travis-ci.org/SerhatTeker/yadrta.svg?branch=docker)](https://travis-ci.com/github/SerhatTeker/yadrta)
 
 # YADRTA

@@ -39,5 +39,4 @@ coverage:
 	coverage report -m
 	coverage html
 pytest:
-	pytest tests/vone/test_serializers.py
-	# pytest tests/vone/test_serializers.py::TestTaskSerializer
+	pytest tests/vone/test_category_views.py::TestCategoryDetailAPIView
