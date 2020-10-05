@@ -123,18 +123,31 @@ AUTH_USER_MODEL = "users.User"
 
 # Django Rest Framework
 REST_FRAMEWORK = {
+    # General
+    "DATETIME_FORMAT": "%Y-%m-%dT%H:%M:%S%z",
+    # Pagination
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": int(os.getenv("DJANGO_PAGINATION_LIMIT", 10)),
-    "DATETIME_FORMAT": "%Y-%m-%dT%H:%M:%S%z",
+    # Render
     "DEFAULT_RENDERER_CLASSES": (
         "rest_framework.renderers.JSONRenderer",
         "rest_framework.renderers.BrowsableAPIRenderer",
     ),
+    # Permission/Authentication
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework.authentication.TokenAuthentication",
     ),
+    # Throttling
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '100/day',
+        'user': '1000/day',
+    }
 }
 
 SITE_NAME = "YADRTA"
