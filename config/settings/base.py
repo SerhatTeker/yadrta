@@ -20,6 +20,13 @@ USE_I18N = False
 USE_L10N = True
 USE_TZ = True
 
+# DATABASES
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#databases
+
+DATABASES = {"default": os.getenv("DATABASE_URL", default="postgres:///djangonews")}
+DATABASES["default"]["ATOMIC_REQUESTS"] = True
+
 # APPS
 # ------------------------------------------------------------------------------
 DJANGO_APPS = [
