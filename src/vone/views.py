@@ -4,6 +4,7 @@ from drf_yasg.views import get_schema_view
 from rest_framework import permissions, viewsets
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
+from src.core.utils.permissions import GetOnlyOwnerObjectQuerysetMixin
 from src.core.utils.views import EnablePartialUpdateMixin
 
 from .models import Category, Tag, Task
@@ -35,17 +36,19 @@ class TodoDetailView(RetrieveUpdateDestroyAPIView):
 # ------------------------------------------------------------------------------
 
 
-class CategoryViewSet(viewsets.ModelViewSet):
+class CategoryViewSet(GetOnlyOwnerObjectQuerysetMixin, viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
 
-class TagViewSet(viewsets.ModelViewSet):
+class TagViewSet(GetOnlyOwnerObjectQuerysetMixin, viewsets.ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
 
 
-class TodoViewSet(EnablePartialUpdateMixin, viewsets.ModelViewSet):
+class TodoViewSet(
+    GetOnlyOwnerObjectQuerysetMixin, EnablePartialUpdateMixin, viewsets.ModelViewSet
+):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 
