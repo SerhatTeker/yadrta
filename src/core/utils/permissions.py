@@ -14,3 +14,8 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 
         # Instance must have an attribute named `created_by`.
         return obj.created_by == request.user
+
+
+class GetOnlyOwnerObjectQuerysetMixin:
+    def get_queryset(self, *args, **kwargs):
+        return self.queryset.filter(created_by=self.request.user)
