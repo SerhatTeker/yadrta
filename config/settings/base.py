@@ -4,6 +4,10 @@ Base settings to build other settings files upon.
 import os
 from pathlib import Path
 
+import environ
+
+env = environ.Env()
+
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 # djangonews/
 APPS_DIR = ROOT_DIR / "src"
@@ -24,7 +28,7 @@ USE_TZ = True
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
-DATABASES = {"default": os.getenv("DATABASE_URL", default="postgres:///djangonews")}
+DATABASES = {"default": env.db("DATABASE_URL", default="postgres:///djangonews")}
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 # APPS
