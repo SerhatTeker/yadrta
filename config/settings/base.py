@@ -107,6 +107,17 @@ TEMPLATES = [
     }
 ]
 
+# AUTHENTICATION
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
+AUTH_USER_MODEL = "users.User"
+# https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
+# LOGIN_REDIRECT_URL = "users:redirect"
+LOGOUT_REDIRECT_URL = "/"
+# https://docs.djangoproject.com/en/dev/ref/settings/#login-url
+# LOGIN_URL = "account_login"
+LOGIN_REDIRECT_URL = "/"
+
 # Password Validation
 # https://docs.djangoproject.com/en/2.0/topics/auth/passwords/#module-django.contrib.auth.password_validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -118,10 +129,9 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-# Custom user app
-AUTH_USER_MODEL = "users.User"
 
-# Django Rest Framework
+# DJANGO REST FRAMEWORK
+# ------------------------------------------------------------------------------
 REST_FRAMEWORK = {
     # General
     "DATETIME_FORMAT": "%Y-%m-%dT%H:%M:%S%z",
@@ -140,14 +150,11 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.TokenAuthentication",
     ),
     # Throttling
-    'DEFAULT_THROTTLE_CLASSES': [
-        'rest_framework.throttling.AnonRateThrottle',
-        'rest_framework.throttling.UserRateThrottle'
+    "DEFAULT_THROTTLE_CLASSES": [
+        "rest_framework.throttling.AnonRateThrottle",
+        "rest_framework.throttling.UserRateThrottle",
     ],
-    'DEFAULT_THROTTLE_RATES': {
-        'anon': '100/day',
-        'user': '1000/day',
-    }
+    "DEFAULT_THROTTLE_RATES": {"anon": "100/day", "user": "1000/day"},
 }
 
 SITE_NAME = "YADRTA"
