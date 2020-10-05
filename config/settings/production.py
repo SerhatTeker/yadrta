@@ -95,7 +95,7 @@ EMAIL_SUBJECT_PREFIX = os.getenv(
 # ADMIN
 # ------------------------------------------------------------------------------
 # Django Admin URL regex.
-ADMIN_URL = os.getenv("DJANGO_ADMIN_URL")
+ADMIN_URL = env("DJANGO_ADMIN_URL")
 
 # Anymail
 # ------------------------------------------------------------------------------
