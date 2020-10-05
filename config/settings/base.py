@@ -73,6 +73,12 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Email
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
+
+# ADMIN
+# ------------------------------------------------------------------------------
+# Django Admin URL regex.
+ADMIN_URL = "admin/"
+
 ADMINS = (("Author", "serhat.teker@gmail.com"),)
 
 # URL

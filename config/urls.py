@@ -19,7 +19,8 @@ router.register(r"tag", TagViewSet)
 router.register(r"category", CategoryViewSet)
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    # Django Admin, use {% url 'admin:index' %}
+    path(settings.ADMIN_URL, admin.site.urls),
     path("api-token-auth/", auth_views.obtain_auth_token, name="obtain_auth_token"),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     # the 'api-root' from django rest-frameworks default router
