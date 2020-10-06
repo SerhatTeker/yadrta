@@ -67,11 +67,9 @@ For documemtation:
 
 ### Branches
 
-- [master] - default branch, equals to deployment
+- [master] - default branch
 - [basic] - using django's default basic structure
 - [local] - just for local development
-- [deployment] - prod
-- [pytest] - wip
 
 ### Prerequisites
 
