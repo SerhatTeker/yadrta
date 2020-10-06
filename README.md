@@ -1,11 +1,14 @@
 [![license](https://img.shields.io/badge/license-bsd%203--clause-blue.svg)](https://opensource.org/licenses/bsd-3-clause)
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 [![codecov.io](https://codecov.io/github/SerhatTeker/yadrta/coverage.svg?branch=master)](https://codecov.io/github/SerhatTeker/yadrta?branch=master)
-[![Build Status](https://travis-ci.org/SerhatTeker/yadrta.svg?branch=docker)](https://travis-ci.com/github/SerhatTeker/yadrta)
+[![Travis Build Status](https://travis-ci.org/SerhatTeker/yadrta.svg?branch=docker)](https://travis-ci.com/github/SerhatTeker/yadrta)
 
 # YADRTA
 
 __Yet Another Djando REST Todo App__ using django rest and django with [OpenAPI Specification].
+The purpose of this project is to show minimal best practices including tests.
+
+**Demo:** https://yadrta.herokuapp.com
 
 ![openapi - swagger](./docs/img/screenshots/swagger.png)
 _swagger_
@@ -36,6 +39,7 @@ _django rest api_
   * [API v1](#api-v1)
     * [Sample API Responses](#sample-api-responses)
 * [Testing](#testing)
+  * [Test Coverage](#test-coverage)
 * [Versioning](#versioning)
 * [Authors](#authors)
 * [License](#license)
@@ -247,18 +251,20 @@ After those you will get below _todo sample api response_:
     "previous": null,
     "results": [
         {
-            "uuid": "25696439-a580-4489-9e5a-6172d0954430",
-            "created_by": 1,
-            "created_at": "2020-09-17T15:51:26.527025Z",
-            "changed_at": "2020-09-17T15:51:26.527058Z",
-            "name": "business"
+            "name": "business",
+            "pk": 1,
+            "uuid": "d1911f18-8a49-457c-aa72-b1e9ae9e198d",
+            "created_by": "1809d5b4-4b71-4b68-9221-73af7a2e221d",
+            "created_at": "2020-09-17T15:49:42.392670Z",
+            "changed_at": "2020-09-17T15:49:42.392730Z",
         },
         {
-            "uuid": "89e875b3-ae1d-4a91-a8d0-b4975127d97f",
-            "created_by": 1,
-            "created_at": "2020-09-17T15:51:38.682076Z",
-            "changed_at": "2020-09-17T15:51:38.682147Z",
-            "name": "learning"
+            "name": "post",
+            "pk": 2,
+            "uuid": "d1911f18-8a49-457c-aa72-b1e9ae9e198d",
+            "created_by": "1809d5b4-4b71-4b68-9221-73af7a2e221d",
+            "created_at": "2020-09-17T15:49:42.392670Z",
+            "changed_at": "2020-09-17T15:49:42.392730Z",
         }
     ]
 }
@@ -273,18 +279,20 @@ After those you will get below _todo sample api response_:
     "previous": null,
     "results": [
         {
+            "name": "newthing",
+            "pk": 1,
             "uuid": "d1911f18-8a49-457c-aa72-b1e9ae9e198d",
-            "created_by": 1,
+            "created_by": "1809d5b4-4b71-4b68-9221-73af7a2e221d",
             "created_at": "2020-09-17T15:49:42.392670Z",
             "changed_at": "2020-09-17T15:49:42.392730Z",
-            "name": "newthing"
         },
         {
-            "uuid": "a95acc20-483c-43de-83e7-c6fe44ba4f2e",
-            "created_by": 1,
-            "created_at": "2020-09-17T15:49:56.709027Z",
-            "changed_at": "2020-09-17T15:49:56.709064Z",
-            "name": "language"
+            "name": "language",
+            "pk": 2,
+            "uuid": "d1911f18-8a49-457c-aa72-b1e9ae9e198d",
+            "created_by": "1809d5b4-4b71-4b68-9221-73af7a2e221d",
+            "created_at": "2020-09-17T15:49:42.392670Z",
+            "changed_at": "2020-09-17T15:49:42.392730Z",
         }
     ]
 }
@@ -299,26 +307,28 @@ After those you will get below _todo sample api response_:
     "previous": null,
     "results": [
         {
-            "uuid": "9d208186-0987-4a7c-a75c-17094b7e6aab",
-            "created_by": 1,
-            "created_at": "2020-09-17T15:52:28.944148Z",
-            "changed_at": "2020-09-17T15:52:28.944182Z",
-            "title": "bla bla",
+            "pk": 1,
             "description": "bla bla",
+            "uuid": "9d208186-0987-4a7c-a75c-17094b7e6aab",
+            "title": "bla bla",
             "status": "todo",
             "tag": 1,
-            "category": 1
+            "category": 1,
+            "created_by": "1809d5b4-4b71-4b68-9221-73af7a2e221d",
+            "created_at": "2020-09-17T15:52:28.944148Z",
+            "changed_at": "2020-09-17T15:52:28.944182Z",
         },
         {
-            "uuid": "d9a804a6-79c3-40bc-befb-3c0290d1f0c8",
-            "created_by": 1,
-            "created_at": "2020-09-17T15:53:05.809323Z",
-            "changed_at": "2020-09-17T15:53:05.809356Z",
+            "pk": 2,
             "title": "bla bla2",
             "description": "bla bla2",
             "status": "todo",
             "tag": 1,
-            "category": 1
+            "category": 1,
+            "uuid": "d9a804a6-79c3-40bc-befb-3c0290d1f0c8",
+            "created_by": "1809d5b4-4b71-4b68-9221-73af7a2e221d",
+            "created_at": "2020-09-17T15:53:05.809323Z",
+            "changed_at": "2020-09-17T15:53:05.809356Z",
         }
     ]
 }
@@ -332,9 +342,16 @@ To run tests:
 $ pytest
 ```
 
+### Test Coverage
+
+Current test coverage:
+[![codecov.io](https://codecov.io/github/SerhatTeker/yadrta/coverage.svg?branch=master)](https://codecov.io/github/SerhatTeker/yadrta?branch=master)
+
+For a detail report: https://codecov.io/github/SerhatTeker/yadrta?branch=master
+
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available,
+I use [SemVer](http://semver.org/) for versioning. For the versions available,
 see the [tags on this repository](https://github.com/serhatteker/yadrta/tags).
 
 ## Authors
