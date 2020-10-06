@@ -4,6 +4,10 @@ Base settings to build other settings files upon.
 import os
 from pathlib import Path
 
+import environ
+
+env = environ.Env()
+
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 # djangonews/
 APPS_DIR = ROOT_DIR / "src"
@@ -19,6 +23,13 @@ LANGUAGE_CODE = "en-us"
 USE_I18N = False
 USE_L10N = True
 USE_TZ = True
+
+# DATABASES
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#databases
+
+DATABASES = {"default": env.db("DATABASE_URL", default="postgres:///djangonews")}
+DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 # APPS
 # ------------------------------------------------------------------------------
@@ -46,6 +57,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 # https://docs.djangoproject.com/en/2.0/topics/http/middleware/
 MIDDLEWARE = (
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -60,6 +72,12 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 # Email
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+
+# ADMIN
+# ------------------------------------------------------------------------------
+# Django Admin URL regex.
+ADMIN_URL = "admin/"
 
 ADMINS = (("Author", "serhat.teker@gmail.com"),)
 
@@ -94,8 +112,7 @@ MEDIA_URL = "/media/"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": STATICFILES_DIRS,
-        "APP_DIRS": True,
+        "DIRS": [str(APPS_DIR / "templates")],
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.debug",
