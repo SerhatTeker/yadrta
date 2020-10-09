@@ -50,6 +50,7 @@ THIRD_PARTY_APPS = [
     "django_filters",
     # OpenAPI
     "drf_yasg",
+    "rest_framework_tracking",
 ]
 LOCAL_APPS = ["src.users.apps.UsersConfig", "src.vone.apps.VoneConfig"]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

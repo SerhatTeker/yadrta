@@ -1,7 +1,9 @@
 from django.urls import include, path, re_path
-from rest_framework.routers import DefaultRouter
 
 from . import views
+
+# from rest_framework.routers import DefaultRouter
+
 
 # Create a router and register our viewsets with it.
 # router = DefaultRouter()
@@ -10,11 +12,11 @@ from . import views
 # router.register(r"category", views.CategoryViewSet)
 
 
-# disabled
-api_views = [
-    path("todos/", views.TodoListView.as_view()),
-    path("todos/<int:id>", views.TodoDetailView.as_view()),
-]
+# inactive
+# api_views = [
+#     path("todos/", views.TodoListView.as_view()),
+#     path("todos/<int:id>", views.TodoDetailView.as_view()),
+# ]
 
 # model_view_sets = [path("", include(router.urls))]
 
