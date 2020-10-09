@@ -336,7 +336,13 @@ After those you will get below _todo sample api response_:
 
 ## Testing
 
-To run tests:
+Install requirements:
+
+```bash
+$ pip install -r requirements/local.txt
+```
+
+Run tests:
 
 ```bash
 $ pytest
