@@ -4,19 +4,8 @@ from django.contrib import admin
 from django.urls import include, path, re_path, reverse_lazy
 from django.views.generic.base import RedirectView
 from rest_framework.authtoken import views as auth_views
-from rest_framework.routers import DefaultRouter
 
-from src.users.views import UserCreateViewSet, UserViewSet
-from src.vone.views import CategoryViewSet, TagViewSet, TodoViewSet
-
-router = DefaultRouter()
-# Users
-router.register(r"users", UserViewSet)
-router.register(r"users", UserCreateViewSet)
-# API_V1
-router.register(r"todo", TodoViewSet)
-router.register(r"tag", TagViewSet)
-router.register(r"category", CategoryViewSet)
+from .routers import router
 
 urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
