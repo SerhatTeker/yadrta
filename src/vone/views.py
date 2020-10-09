@@ -1,54 +1,34 @@
 from django.http import HttpResponseRedirect
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
-from rest_framework import permissions, viewsets
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework import permissions
 
-from src.core.utils.permissions import GetOnlyOwnerObjectQuerysetMixin
-from src.core.utils.views import EnablePartialUpdateMixin
+from src.core.utils.views import BaseModelViewSetWithTracking, EnablePartialUpdateMixin
 
 from .models import Category, Tag, Task
 from .serializers import CategorySerializer, TagSerializer, TaskSerializer
 
-
+# inactive
 def index(request):
     """ Redirect $home_url `/` to `/api/v1/` """
     return HttpResponseRedirect("/api/v1/")
-
-
-# APIViews
-# ------------------------------------------------------------------------------
-
-
-class TodoListView(ListCreateAPIView):
-    queryset = Task.objects.all()
-    serializer_class = TaskSerializer
-
-
-class TodoDetailView(RetrieveUpdateDestroyAPIView):
-    lookup_field = "id"
-    queryset = Task.objects.all()
-    # permission_classes = (permissions.AllowAny,)
-    serializer_class = TaskSerializer
 
 
 # ViewSets
 # ------------------------------------------------------------------------------
 
 
-class CategoryViewSet(GetOnlyOwnerObjectQuerysetMixin, viewsets.ModelViewSet):
+class CategoryViewSet(BaseModelViewSetWithTracking):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
 
-class TagViewSet(GetOnlyOwnerObjectQuerysetMixin, viewsets.ModelViewSet):
+class TagViewSet(BaseModelViewSetWithTracking):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
 
 
-class TodoViewSet(
-    GetOnlyOwnerObjectQuerysetMixin, EnablePartialUpdateMixin, viewsets.ModelViewSet
-):
+class TodoViewSet(EnablePartialUpdateMixin, BaseModelViewSetWithTracking):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 

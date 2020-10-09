@@ -11,7 +11,8 @@ def user_id_to_hex(uuid: str) -> str:
     :param uuid: uuid string with dashes
     :type uuid: str
 
-    :returns: str - hex of uuid
+    :return: hex of uuid
+    :rtype: str
     """
 
     return UUID(uuid).hex
