@@ -29,6 +29,7 @@ _django rest api_
 * [Getting Up and Running Locally](#getting-up-and-running-locally)
   * [Installing](#installing)
   * [Setting Up Development Environment](#setting-up-development-environment)
+  * [Code Quality](#code-quality)
   * [Summary](#summary)
 * [Usage](#usage)
   * [Authentication](#authentication)
@@ -134,6 +135,22 @@ $ git clone git@github.com:SerhatTeker/yadrta.git
     # or shorter : default make target is `runserver`
     # $ make
     ```
+
+### Code Quality
+
+For code quality this repo uses [pre-commit]: A framework for managing and
+maintaining multi-language pre-commit hooks.
+
+Configuration file can be found:
+[.pre-commit-config.yaml](./.pre-commit-config.yaml).
+
+To install the git hook script run:
+
+```bash
+$ pre-commit install
+```
+
+Now `pre-commit` will run automatically on `git commit`!
 
 ### Summary
 
@@ -381,3 +398,4 @@ This project is licensed under the BSD-3-Clause License - see the
 [local]: https://github.com/SerhatTeker/yadrta/tree/local
 [deployment]: https://github.com/SerhatTeker/yadrta/tree/deployment
 [pytest]: https://github.com/SerhatTeker/yadrta/tree/pytest
+[pre-commit]: https://pre-commit.com/
