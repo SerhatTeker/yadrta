@@ -1,3 +1,5 @@
+import logging
+
 import factory
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -8,8 +10,8 @@ from tests.users.factories import UserFactory
 
 from .factories import CategoryFactory, fake
 
-import logging
 LOGGER = logging.getLogger(__name__)
+
 
 class BaseTestClass(APITestCase):
     def setUp(self):

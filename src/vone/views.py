@@ -8,6 +8,7 @@ from src.core.utils.views import BaseModelViewSetWithTracking, EnablePartialUpda
 from .models import Category, Tag, Task
 from .serializers import CategorySerializer, TagSerializer, TaskSerializer
 
+
 # inactive
 def index(request):
     """ Redirect $home_url `/` to `/api/v1/` """

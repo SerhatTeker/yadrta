@@ -1,6 +1,7 @@
 import os
 
 from .base import *  # noqa
+from .base import ROOT_DIR, TEMPLATES
 
 # GENERAL
 # ------------------------------------------------------------------------------
@@ -32,7 +33,7 @@ CACHES = {
 EMAIL_BACKEND = os.getenv(
     "DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend"
 )
-EMAIL_HOST = 'localhost'
+EMAIL_HOST = "localhost"
 EMAIL_PORT = 1025
 
 # DATABASES

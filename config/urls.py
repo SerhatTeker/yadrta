@@ -7,27 +7,24 @@ from rest_framework.authtoken import views as auth_views
 
 from .routers import router
 
-users_urls = [
+urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
     path("api-token-auth/", auth_views.obtain_auth_token, name="obtain_auth_token"),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
 ]
 
-drf_urls = [
+# DRF
+urlpatterns += [
     # the 'api-root' from django rest-frameworks default router
     # http://www.django-rest-framework.org/api-guide/routers/#defaultrouter
     re_path(r"^$", RedirectView.as_view(url=reverse_lazy("api-root"), permanent=False)),
 ]
 
+# API
 version = "v1"
-api_urls = [
+urlpatterns += [
     path(f"api/{version}/", include(router.urls)),
     # docs
-    path(f"api{version}/doc/", include("src.vone.urls"))
-]
-
-urlpatterns = users_urls \
-    + drf_urls \
-    + api_urls \
-    + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path(f"api{version}/doc/", include("src.vone.urls")),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
