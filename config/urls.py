@@ -12,7 +12,7 @@ urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
     path("api-token-auth/", auth_views.obtain_auth_token, name="obtain_auth_token"),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # DRF
 urlpatterns += [
@@ -27,4 +27,4 @@ urlpatterns += [
     path(f"api/{version}/", include(router.urls)),
     # docs
     path(f"api{version}/doc/", include("src.vone.urls")),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
