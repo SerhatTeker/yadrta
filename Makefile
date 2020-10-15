@@ -31,7 +31,7 @@ install: venv ## Make venv and install local requirements
 migrate: ## Make migrate
 	$(PYTHON) manage.py migrate
 
-startproject: install migrate run ## Install requirements, apply migrations, then start development server
+startproject: install migrate ## Install requirements, apply migrations
 
 makemigrations: ## Make migrations
 	$(PYTHON) manage.py makemigrations
