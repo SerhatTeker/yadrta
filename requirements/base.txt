@@ -25,6 +25,7 @@ djangorestframework==3.11.1
 Markdown==3.2.2
 django-filter==2.3.0
 drf-yasg==1.17.1 # OpenAPI
+drf-api-tracking==1.7.7 # https://github.com/lingster/drf-api-tracking
 
 # Documentation
 # ------------------------------------------------------------------------------
