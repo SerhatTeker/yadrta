@@ -113,7 +113,7 @@ $ git clone git@github.com:SerhatTeker/yadrta.git
 3.  Install development requirements:
 
     ```bash
-    $ pip install -r requirements.txt
+    $ pip install -r requirements/local.txt
     ```
 
 4. Apply migrations:
