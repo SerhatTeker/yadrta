@@ -10,7 +10,7 @@ PYTHON		:= $(PYTHON3)
 DJANGO_PORT	:= 8000
 DBNAME		:= "yadrta"
 
-include .env
+include .env.dev
 
 .PHONY: help venv install migrate startproject runserver django-shell db-up db-shell test coverage
 
@@ -19,7 +19,10 @@ include .env
 help: ## Show this help
 	@egrep -h '\s##\s' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
-# INSTALL PROJECT
+# LOCAL DEV
+# -------------------------------------------------------------------------------------
+
+# Install Project
 # -------------------------------------------------------------------------------------
 venv: ## Make a new virtual environment
 	# python3 -m venv $(VENV) && source $(BIN)/activate
@@ -55,7 +58,7 @@ createsuperuser: ## Create django admin user. Before define $DJANGO_DEV_ADMIN in
 createsuperuser-man: ## Create manually django admin. Asks password
 	$(PYTHON) manage.py createsuperuser --email testadmin@testapi.com --username testadmin
 
-# LOCAL DEV
+# Django
 # -------------------------------------------------------------------------------------
 django-shell: ## Run ipython in django shell
 	python manage.py shell -i ipython
