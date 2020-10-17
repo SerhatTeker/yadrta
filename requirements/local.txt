@@ -9,8 +9,6 @@ ipython==7.18.1
 # ------------------------------------------------------------------------------
 mock==4.0.2
 factory-boy==3.0.1
-django-nose==1.4.7
-nose-progressive==1.5.2
 # pytest
 pytest==6.0.1  # https://github.com/pytest-dev/pytest
 pytest-sugar==0.9.3  # https://github.com/Frozenball/pytest-sugar
