@@ -9,7 +9,7 @@ before_script:
 script:
   - docker-compose run --rm web bash -c "flake8 . &&
                                          python wait_for_postgres.py &&
-                                         ./manage.py test"
+                                         python manage.py test"
 
 notifications:
   email: false

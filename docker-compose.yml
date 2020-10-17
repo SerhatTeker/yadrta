@@ -7,12 +7,13 @@ services:
     restart: always
     environment:
       - DJANGO_SECRET_KEY=local
+      - DJANGO_SETTINGS_MODULE=config.settings.production
     image: web
     build: ./
     command: >
       bash -c "python wait_for_postgres.py &&
-               ./manage.py migrate &&
-               ./manage.py runserver 0.0.0.0:8000"
+               python manage.py migrate &&
+               python manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./:/code
     ports:
