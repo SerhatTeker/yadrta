@@ -2,10 +2,8 @@ import factory
 from django.contrib.auth.hashers import check_password
 from django.urls import reverse
 from faker import Faker
-from nose.tools import eq_, ok_
 from rest_framework import status
 from rest_framework.test import APITestCase
-
 from src.users.models import User
 from tests.users.factories import UserFactory
 
@@ -23,15 +21,17 @@ class TestUserListTestCase(APITestCase):
 
     def test_post_request_with_no_data_fails(self):
         response = self.client.post(self.url, {})
-        eq_(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_post_request_with_valid_data_succeeds(self):
         response = self.client.post(self.url, self.user_data)
-        eq_(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
         user = User.objects.get(pk=response.data.get("id"))
-        eq_(user.username, self.user_data.get("username"))
-        ok_(check_password(self.user_data.get("password"), user.password))
+        self.assertEqual(user.username, self.user_data.get("username"))
+        self.assertEqual(
+            check_password(self.user_data.get("password"), user.password), True
+        )
 
 
 class TestUserDetailTestCase(APITestCase):
@@ -46,13 +46,13 @@ class TestUserDetailTestCase(APITestCase):
 
     def test_get_request_returns_a_given_user(self):
         response = self.client.get(self.url)
-        eq_(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_put_request_updates_a_user(self):
         new_first_name = fake.first_name()
         payload = {"first_name": new_first_name}
         response = self.client.put(self.url, payload)
-        eq_(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         user = User.objects.get(pk=self.user.id)
-        eq_(user.first_name, new_first_name)
+        self.assertEqual(user.first_name, new_first_name)
