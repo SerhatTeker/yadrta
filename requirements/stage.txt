@@ -8,18 +8,12 @@ psycopg2==2.8.5 --no-binary psycopg2  # https://github.com/psycopg/psycopg2
 # Django
 # ------------------------------------------------------------------------------
 # django-anymail[mailgun]==7.1.0  # https://github.com/anymail/django-anymail
-
-# Developer Tools
-# ------------------------------------------------------------------------------
-ipdb==0.13.3
-ipython==7.18.1
+dj-database-url==0.5.0
 
 # Testing
 # ------------------------------------------------------------------------------
 mock==4.0.2
 factory-boy==3.0.1
-django-nose==1.4.7
-nose-progressive==1.5.2
 # pytest
 pytest==6.0.1  # https://github.com/pytest-dev/pytest
 pytest-sugar==0.9.3  # https://github.com/Frozenball/pytest-sugar
@@ -32,4 +26,3 @@ coverage==5.3  # https://github.com/nedbat/coveragepy
 django-coverage-plugin==1.8.0  # https://github.com/nedbat/django_coverage_plugin
 flake8==3.8.3
 flake8-isort==3.0.1  # https://github.com/gforcada/flake8-isort
-pre-commit==2.7.1  # https://github.com/pre-commit/pre-commit
