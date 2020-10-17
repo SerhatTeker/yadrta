@@ -4,7 +4,7 @@ USE_DOCKER=yes
 IPYTHONDIR=/app/.ipython
 
 DJANGO_SECRET_KEY=stage
-DJANGO_SETTINGS_MODULE=config.settings.production
+DJANGO_SETTINGS_MODULE=config.settings.stage
 DJANGO_ADMIN_URL="stage-admin/"
 
 # Redis
