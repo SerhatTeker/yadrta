@@ -49,10 +49,10 @@ createsecret: ## Create DJANGO_SECRET
 # You need to define an env var : DJANGO_DEV_ADMIN. Example below
 # DJANGO_DEV_ADMIN=name:email:password
 # DJANGO_DEV_ADMIN=testadmin:testadmin@testapi.com:123asX3?23
-createsuperuser: ## Create django admin user. Before define $DJANGO_DEV_ADMIN in .env or environment
+create-superuser-local: ## Create django admin user. Before define $DJANGO_DEV_ADMIN in .env or environment
 	@echo "from django.contrib.auth import get_user_model;"\
 		"User = get_user_model();" \
-		"User.objects.create_superuser(*'$(DJANGO_DEV_ADMIN)'.split(':'))" \
+		"User.objects.create_superuser(*'$(DJANGO_DEV_ADMIN_LOCAL)'.split(':'))" \
 		| python manage.py shell
 
 createsuperuser-man: ## Create manually django admin. Asks password
