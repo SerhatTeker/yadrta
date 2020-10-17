@@ -3,7 +3,7 @@ ENV PYTHONUNBUFFERED 1
 
 # Requirements are installed here to ensure they will be cached.
 COPY ./requirements /requirements
-RUN pip install -r /requirements/production.txt
+RUN pip install -r /requirements/stage.txt
 
 # Adds our application code to the image
 COPY . code
