@@ -1,15 +1,14 @@
 sudo: required
 language: python
+python:
+  - "3.8"
 services:
   - docker
-python:
-  - "3.6"
 before_script:
   - docker-compose build
 script:
-  - docker-compose run --rm web bash -c "flake8 . &&
-                                         python wait_for_postgres.py &&
-                                         ./manage.py test"
+  - docker-compose run --rm web bash -c "python wait_for_postgres.py &&
+                                         pytest"
 
 notifications:
   email: false

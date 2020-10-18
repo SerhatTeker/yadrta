@@ -1,0 +1,15 @@
+# General
+# ------------------------------------------------------------------------------
+USE_DOCKER=yes
+
+DJANGO_SECRET_KEY=stage
+DJANGO_SETTINGS_MODULE=config.settings.stage
+DJANGO_ADMIN_URL="admin/"
+
+# Redis
+# ------------------------------------------------------------------------------
+REDIS_URL=redis://redis:6379/0
+
+# Test Admin User
+# ------------------------------------------------------------------------------
+DJANGO_DEV_ADMIN=testuser:user@test.api:123asX3?23
