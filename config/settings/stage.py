@@ -19,8 +19,8 @@ ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["example.com"])
 # ------------------------------------------------------------------------------
 DATABASES = {
     "default": dj_database_url.config(
-        default=env.db("DATABASE_URL"),
-        conn_max_age=env.int("POSTGRES_CONN_MAX_AGE", 60),
+        default="postgres://postgres:@postgres:5432/postgres",
+        conn_max_age=int(os.getenv("POSTGRES_CONN_MAX_AGE", 600)),
     )
 }
 
