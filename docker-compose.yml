@@ -3,13 +3,10 @@ version: '2'
 services:
   postgres:
     image: postgres:11.6
-    env_file:
-      - ./.envs/.stage/.postgres
   web:
     restart: always
     env_file:
       - ./.envs/.stage/.django
-      - ./.envs/.stage/.postgres
     image: web
     build: ./
     command: >

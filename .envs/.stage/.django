@@ -1,11 +1,10 @@
 # General
 # ------------------------------------------------------------------------------
 USE_DOCKER=yes
-IPYTHONDIR=/app/.ipython
 
 DJANGO_SECRET_KEY=stage
 DJANGO_SETTINGS_MODULE=config.settings.stage
-DJANGO_ADMIN_URL="stage-admin/"
+DJANGO_ADMIN_URL="admin/"
 
 # Redis
 # ------------------------------------------------------------------------------

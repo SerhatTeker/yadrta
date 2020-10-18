@@ -23,7 +23,6 @@ DATABASES = {
         conn_max_age=env.int("POSTGRES_CONN_MAX_AGE", 60),
     )
 }
-DATABASES["default"]["ATOMIC_REQUESTS"] = True  # noqa F405
 
 
 # CACHES
