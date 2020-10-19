@@ -8,7 +8,9 @@ services:
   - docker
 
 before_script:
-  - docker-compose build
+  - docker -v
+  - docker-compose -v
+  - docker-compose -f stage.yml build
 
 script:
   # Codecov testing with pytest
