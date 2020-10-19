@@ -23,5 +23,6 @@ pytest-django==3.9.0  # https://github.com/pytest-dev/pytest-django
 # ------------------------------------------------------------------------------
 black==19.10b0  # https://github.com/ambv/black
 coverage==5.3  # https://github.com/nedbat/coveragepy
+pytest-cov==2.10.1 # https://github.com/pytest-dev/pytest-cov
 flake8==3.8.3
 flake8-isort==3.0.1  # https://github.com/gforcada/flake8-isort

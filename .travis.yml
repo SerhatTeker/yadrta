@@ -12,14 +12,11 @@ before_script:
 
 script:
   - docker-compose run --rm web bash -c "python wait_for_postgres.py &&
-                                         coverage erase &&
-                                         coverage run -m pytest &&
-                                         coverage report -m &&
-                                         coverage html"
+                                         pytest --cov-report=xml --cov=myproj tests/"
 
 # push results to CodeCov
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - codecov
 
 # Don't email me the results of the test runs
 notifications:
