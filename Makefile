@@ -4,13 +4,14 @@ SHELL := /bin/bash
 # Django Variables
 # -------------------------------------------------------------------------------------
 VENV		:= ./.venv
+ENVS		:= ./.envs
 BIN		:= $(VENV)/bin
 PYTHON3		:= $(BIN)/python3
 PYTHON		:= $(PYTHON3)
 DJANGO_PORT	:= 8000
 DBNAME		:= "yadrta"
 
-include .env.dev
+include $(ENVS)/.local/.django
 
 .PHONY: help venv install migrate startproject runserver django-shell db-up db-shell test coverage
 
@@ -53,7 +54,7 @@ create-superuser-local: ## Create django admin user. Before define $DJANGO_DEV_A
 	@echo "from django.contrib.auth import get_user_model;"\
 		"User = get_user_model();" \
 		"User.objects.create_superuser(*'$(DJANGO_DEV_ADMIN_LOCAL)'.split(':'))" \
-		| python manage.py shell
+		| $(PYTHON) manage.py shell
 
 createsuperuser-man: ## Create manually django admin. Asks password
 	$(PYTHON) manage.py createsuperuser --email testadmin@testapi.com --username testadmin
@@ -61,7 +62,7 @@ createsuperuser-man: ## Create manually django admin. Asks password
 # Django
 # -------------------------------------------------------------------------------------
 django-shell: ## Run ipython in django shell
-	python manage.py shell -i ipython
+	$(PYTHON) manage.py shell -i ipython
 
 runserver: ## Run the Django server
 	$(PYTHON) manage.py runserver $(DJANGO_PORT)
