@@ -13,7 +13,7 @@ DBNAME		:= "yadrta"
 
 include $(ENVS)/.local/.django
 
-.PHONY: help venv install migrate startproject runserver django-shell db-up db-shell test coverage
+.PHONY: help venv install migrate startproject runserver django-shell db-up db-shell test coverage travis
 
 .DEFAULT_GOAL := runserver
 
@@ -69,7 +69,7 @@ runserver: ## Run the Django server
 
 # TEST
 # -------------------------------------------------------------------------------------
-test: ## Run tests. Test runner is pytest
+_test: ## Run spesific tests. Test runner is pytest
 	pytest tests/vone/test_views.py::TestTagDetailView
 	# pytest tests/vone/test_views.py::TestTagCreateAPIView
 
@@ -79,6 +79,8 @@ coverage: ## Clear and run coverage report
 	coverage report -m
 	coverage html
 
+test: coverage ## Run tests and make coverage report
+
 # DOCKER
 # -------------------------------------------------------------------------------------
 db-up: ## Start the Docker containers in the background
@@ -86,3 +88,10 @@ db-up: ## Start the Docker containers in the background
 
 db-shell: ## Access the Postgres Docker database interactively with psql
 	docker exec -it container_name psql -d $(DBNAME)
+
+# TRAVIS
+# -------------------------------------------------------------------------------------
+wait-postgres:
+	python wait_for_postgres.py
+
+travis:  wait_for_postgres test ## Travis build
