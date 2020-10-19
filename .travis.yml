@@ -20,7 +20,7 @@ script:
 
 # Show logs if build fails
 after_failure:
-  - docker-compose -f local.yml logs
+  - docker-compose -f stage.yml logs
 
 # Push results to Codecov.io
 after_success:

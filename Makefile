@@ -83,8 +83,11 @@ test: coverage ## Run tests and make coverage report
 
 # DOCKER
 # -------------------------------------------------------------------------------------
-db-up: ## Start the Docker containers in the background
-	docker-compose up -d
+docker-build: ## Start the Docker containers in the background
+	docker-compose -f stage.yml build
+
+docker-up: ## Start the Docker containers in the background
+	docker-compose -f stage.yml up -d
 
 db-shell: ## Access the Postgres Docker database interactively with psql
 	docker exec -it container_name psql -d $(DBNAME)
