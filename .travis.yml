@@ -18,6 +18,10 @@ script:
   - docker-compose -f stage.yml run --rm web bash -c "python wait_for_postgres.py &&
                                          pytest --cov-report=xml --cov=./ tests/"
 
+# Show logs if build fails
+after_failure:
+  - docker-compose -f local.yml logs
+
 # Push results to Codecov.io
 after_success:
   - bash <(curl -s https://codecov.io/bash)

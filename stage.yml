@@ -4,13 +4,13 @@ services:
   postgres:
     image: postgres:11.6
 
-  web:
+  django:
     restart: always
     env_file:
       - ./.envs/.stage/.django
     image: web
     build:
-      context : ./
+      context: .
       dockerfile: ./compose/stage/django/Dockerfile
     command: >
       bash -c "python wait_for_postgres.py &&
