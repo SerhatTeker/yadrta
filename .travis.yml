@@ -16,7 +16,7 @@ script:
 
 # push results to CodeCov
 after_success:
-  - codecov
+  - bash <(curl -s https://codecov.io/bash)
 
 # Don't email me the results of the test runs
 notifications:
