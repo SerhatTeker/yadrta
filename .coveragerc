@@ -14,7 +14,8 @@ omit = *migrations*,
 	./.venv/*,
 	./manage.py,
 	./config/*,
-	*__init__*
+	*__init__*,
+	./wait_for_postgres.py,
 
 # [html]
 # directory = ./run/htmlcov
