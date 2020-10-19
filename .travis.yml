@@ -6,11 +6,18 @@ python:
 
 services:
   - docker
+
 before_script:
   - docker-compose build
+
 script:
   - docker-compose run --rm web bash -c "make travis"
 
+# push results to CodeCov
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
+# Don't email me the results of the test runs
 notifications:
   email: false
 
