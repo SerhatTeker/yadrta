@@ -12,7 +12,7 @@ before_script:
 
 script:
   - docker-compose run --rm web bash -c "python wait_for_postgres.py &&
-                                         pytest --cov-report=xml --cov=myproj tests/"
+                                         pytest --cov-report=xml --cov=./ tests/"
 
 # push results to CodeCov
 after_success:
