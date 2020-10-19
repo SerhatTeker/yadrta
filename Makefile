@@ -4,15 +4,16 @@ SHELL := /bin/bash
 # Django Variables
 # -------------------------------------------------------------------------------------
 VENV		:= ./.venv
+ENVS		:= ./.envs
 BIN		:= $(VENV)/bin
 PYTHON3		:= $(BIN)/python3
 PYTHON		:= $(PYTHON3)
 DJANGO_PORT	:= 8000
 DBNAME		:= "yadrta"
 
-include .env.dev
+include $(ENVS)/.local/.django
 
-.PHONY: help venv install migrate startproject runserver django-shell db-up db-shell test coverage
+.PHONY: help venv install migrate startproject runserver django-shell db-up db-shell test coverage travis
 
 .DEFAULT_GOAL := runserver
 
@@ -53,7 +54,7 @@ create-superuser-local: ## Create django admin user. Before define $DJANGO_DEV_A
 	@echo "from django.contrib.auth import get_user_model;"\
 		"User = get_user_model();" \
 		"User.objects.create_superuser(*'$(DJANGO_DEV_ADMIN_LOCAL)'.split(':'))" \
-		| python manage.py shell
+		| $(PYTHON) manage.py shell
 
 createsuperuser-man: ## Create manually django admin. Asks password
 	$(PYTHON) manage.py createsuperuser --email testadmin@testapi.com --username testadmin
@@ -61,14 +62,14 @@ createsuperuser-man: ## Create manually django admin. Asks password
 # Django
 # -------------------------------------------------------------------------------------
 django-shell: ## Run ipython in django shell
-	python manage.py shell -i ipython
+	$(PYTHON) manage.py shell -i ipython
 
 runserver: ## Run the Django server
 	$(PYTHON) manage.py runserver $(DJANGO_PORT)
 
 # TEST
 # -------------------------------------------------------------------------------------
-test: ## Run tests. Test runner is pytest
+_test: ## Run spesific tests. Test runner is pytest
 	pytest tests/vone/test_views.py::TestTagDetailView
 	# pytest tests/vone/test_views.py::TestTagCreateAPIView
 
@@ -78,6 +79,8 @@ coverage: ## Clear and run coverage report
 	coverage report -m
 	coverage html
 
+test: coverage ## Run tests and make coverage report
+
 # DOCKER
 # -------------------------------------------------------------------------------------
 db-up: ## Start the Docker containers in the background
@@ -85,3 +88,10 @@ db-up: ## Start the Docker containers in the background
 
 db-shell: ## Access the Postgres Docker database interactively with psql
 	docker exec -it container_name psql -d $(DBNAME)
+
+# TRAVIS
+# -------------------------------------------------------------------------------------
+wait-postgres:
+	python wait_for_postgres.py
+
+travis:  wait_for_postgres test ## Travis build

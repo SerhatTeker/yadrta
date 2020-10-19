@@ -4,28 +4,12 @@ With these settings, tests run faster.
 import os
 
 from .base import *  # noqa
-from .base import APPS_DIR, INSTALLED_APPS, ROOT_DIR
-
-INSTALLED_APPS += [
-    "django_nose",
-]
-# https://docs.djangoproject.com/en/dev/ref/settings/#test-runner
-TEST_RUNNER = "django_nose.NoseTestSuiteRunner"
-# TEST_RUNNER = "django.test.runner.DiscoverRunner"
+from .base import ROOT_DIR
 
 SECRET_KEY = os.getenv(
     "DJANGO_SECRET_KEY",
     default="kY2h68D0TgYGFibh1GiRlZ1PLE52zTKpbIFIymEsNc5zoauSn6asnnSr2dtOiOf1",
 )
-
-NOSE_ARGS = [
-    APPS_DIR,
-    "-s",
-    "--nologcapture",
-    "--with-coverage",
-    "--with-progressive",
-    "--cover-package=yadrta",
-]
 
 # CACHES
 # ------------------------------------------------------------------------------
