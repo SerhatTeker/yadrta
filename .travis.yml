@@ -11,10 +11,12 @@ before_script:
   - docker-compose build
 
 script:
+  # Codecov testing with pytest
+  # https://docs.codecov.io/docs/python#testing-with-pytest
   - docker-compose run --rm web bash -c "python wait_for_postgres.py &&
                                          pytest --cov-report=xml --cov=./ tests/"
 
-# push results to CodeCov
+# Push results to Codecov.io
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
@@ -22,5 +24,6 @@ after_success:
 notifications:
   email: false
 
+# Use pip cache
 cache:
   pip: true
