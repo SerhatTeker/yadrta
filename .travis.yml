@@ -11,7 +11,11 @@ before_script:
   - docker-compose build
 
 script:
-  - docker-compose run --rm web bash -c "make travis"
+  - docker-compose run --rm web bash -c "python wait_for_postgres.py &&
+                                         coverage erase &&
+                                         coverage run -m pytest &&
+                                         coverage report -m &&
+                                         coverage html"
 
 # push results to CodeCov
 after_success:
