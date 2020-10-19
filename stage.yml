@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 services:
   postgres:
@@ -8,26 +8,17 @@ services:
     restart: always
     env_file:
       - ./.envs/.stage/.django
-    image: web
     build:
       context: .
       dockerfile: ./compose/stage/django/Dockerfile
-    command: >
-      bash -c "python wait_for_postgres.py &&
-               python manage.py migrate &&
-               python manage.py runserver 0.0.0.0:8000"
+    image: django_stage_yadrta
     volumes:
       - ./:/code
     ports:
       - "8000:8000"
     depends_on:
       - postgres
-
-  documentation:
-    restart: always
-    build: ./
-    command: "mkdocs serve"
-    volumes:
-      - ./:/code
-    ports:
-      - "8001:8001"
+    command: >
+      bash -c "python wait_for_postgres.py &&
+               python manage.py migrate &&
+               python manage.py runserver 0.0.0.0:8000"
