@@ -13,7 +13,7 @@ before_script:
 script:
   # Codecov testing with pytest
   # https://docs.codecov.io/docs/python#testing-with-pytest
-  - docker-compose run --rm web bash -c "python wait_for_postgres.py &&
+  - docker-compose -f stage.yml run --rm web bash -c "python wait_for_postgres.py &&
                                          pytest --cov-report=xml --cov=./ tests/"
 
 # Push results to Codecov.io
