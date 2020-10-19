@@ -88,10 +88,3 @@ db-up: ## Start the Docker containers in the background
 
 db-shell: ## Access the Postgres Docker database interactively with psql
 	docker exec -it container_name psql -d $(DBNAME)
-
-# TRAVIS
-# -------------------------------------------------------------------------------------
-wait-postgres:
-	python wait_for_postgres.py
-
-travis:  wait_for_postgres test ## Travis build
