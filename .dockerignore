@@ -1,3 +1,10 @@
 .*
 !.coveragerc
 !.env
+
+*.sqlite3
+*.log
+
+tags
+
+Session.vim
