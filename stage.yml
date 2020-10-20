@@ -13,7 +13,7 @@ services:
       dockerfile: ./compose/stage/django/Dockerfile
     image: django_stage_yadrta
     volumes:
-      - ./:/code
+      - ./:/app
     ports:
       - "8000:8000"
     depends_on:
