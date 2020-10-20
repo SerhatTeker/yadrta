@@ -18,7 +18,6 @@ script:
   - docker-compose -f stage.yml run --rm django bash -c "python wait_for_postgres.py &&
                                                          pytest --cov-report=xml --cov=./ tests/"
 
-
 # Show logs if build fails
 after_failure:
   - docker-compose -f stage.yml logs
