@@ -14,9 +14,11 @@ before_script:
 
 script:
   # Codecov testing with pytest
-  # https://docs.codecov.io/docs/python#testing-with-pytest
-  - docker-compose -f stage.yml run --rm django bash -c "python wait_for_postgres.py &&
-                                                         pytest --cov-report=xml --cov=./ tests/"
+  - docker-compose run --rm web bash -c "python wait_for_postgres.py &&
+                                         coverage erase &&
+                                         coverage run -m pytest &&
+                                         coverage report -m &&
+                                         coverage html"
 
 # Show logs if build fails
 after_failure:
