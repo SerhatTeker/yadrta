@@ -9,8 +9,8 @@ services:
     build:
       context: .
       dockerfile: ./compose/local/django/Dockerfile
-    image: djangonews_local_django
-    container_name: django
+    image: yadrta_local_django:0.0.1
+    container_name: yadrta_django
     depends_on:
       - postgres
     volumes:
@@ -26,8 +26,8 @@ services:
     build:
       context: .
       dockerfile: ./compose/production/postgres/Dockerfile
-    image: djangonews_production_postgres
-    container_name: postgres
+    image: yadrta_local_postgres:0.0.1
+    container_name: yadrta_postgres
     volumes:
       - local_postgres_data:/var/lib/postgresql/data
       - local_postgres_data_backups:/backups
@@ -36,4 +36,4 @@ services:
 
   redis:
     image: redis:5.0.3
-    container_name: redis
+    container_name: yadrta_redis

@@ -1,7 +1,8 @@
 import os
 
 from .base import *  # noqa
-from .base import ROOT_DIR, TEMPLATES
+from .base import ROOT_DIR, TEMPLATES, env
+
 
 # GENERAL
 # ------------------------------------------------------------------------------
@@ -39,9 +40,14 @@ EMAIL_PORT = 1025
 # DATABASES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(ROOT_DIR, "db.sqlite3"),
+# In docker use postgres otherwise use sqlite3
+if os.getenv("USE_DOCKER") == "yes":
+    DATABASES = {"default": env.db("DATABASE_URL")}
+    DATABASES["default"]["ATOMIC_REQUESTS"] = True
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": os.path.join(ROOT_DIR, "db.sqlite3"),
+        }
     }
-}

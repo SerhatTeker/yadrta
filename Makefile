@@ -91,3 +91,5 @@ docker-up: ## Start the Docker containers in the background
 
 db-shell: ## Access the Postgres Docker database interactively with psql
 	docker exec -it container_name psql -d $(DBNAME)
+echo-docker:
+	@echo "$(USE_DOCKER)"
