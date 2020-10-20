@@ -1,24 +1,39 @@
 version: '3'
 
-services:
-  postgres:
-    image: postgres:11.6
+volumes:
+  local_postgres_data: {}
+  local_postgres_data_backups: {}
 
-  django:
-    restart: always
-    env_file:
-      - ./.envs/.stage/.django
+services:
+  django: &django
     build:
       context: .
-      dockerfile: ./compose/stage/django/Dockerfile
-    image: django_local_yadrta
-    volumes:
-      - ./:/app
-    ports:
-      - "8000:8000"
+      dockerfile: ./compose/local/django/Dockerfile
+    image: djangonews_local_django
+    container_name: django
     depends_on:
       - postgres
-    command: >
-      bash -c "python wait_for_postgres.py &&
-               python manage.py migrate &&
-               python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    env_file:
+      - ./.envs/.local/.django
+      - ./.envs/.local/.postgres
+    ports:
+      - "8000:8000"
+    command: /start
+
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/production/postgres/Dockerfile
+    image: djangonews_production_postgres
+    container_name: postgres
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data
+      - local_postgres_data_backups:/backups
+    env_file:
+      - ./.envs/.local/.postgres
+
+  redis:
+    image: redis:5.0.3
+    container_name: redis
