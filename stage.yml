@@ -1,24 +1,36 @@
 version: '3'
 
+volumes:
+  stage_postgres_data: {}
+  stage_postgres_data_backups: {}
+
 services:
-  postgres:
-    image: postgres:11.6
 
   django:
     restart: always
-    env_file:
-      - ./.envs/.stage/.django
     build:
       context: .
       dockerfile: ./compose/stage/django/Dockerfile
-    image: django_stage_yadrta
+    image: django_stage_yadrta:0.0.1
+    env_file:
+      - ./.envs/.stage/.django
+      - ./.envs/.stage/.postgres
     volumes:
       - ./:/app
     ports:
       - "8000:8000"
     depends_on:
       - postgres
-    command: >
-      bash -c "python wait_for_postgres.py &&
-               python manage.py migrate &&
-               python manage.py runserver 0.0.0.0:8000"
+    command: /start
+
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/production/postgres/Dockerfile
+    image: yadrta_stage_postgres:0.0.1
+    container_name: yadrta_postgres
+    volumes:
+      - stage_postgres_data:/var/lib/postgresql/data
+      - stage_postgres_data_backups:/backups
+    env_file:
+      - ./.envs/.stage/.postgres

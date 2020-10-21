@@ -9,7 +9,7 @@ import environ
 env = environ.Env()
 
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
-# djangonews/
+# yadrta/
 APPS_DIR = ROOT_DIR / "src"
 
 # GENERAL
@@ -27,8 +27,7 @@ USE_TZ = True
 # DATABASES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
-
-DATABASES = {"default": env.db("DATABASE_URL", default="postgres:///djangonews")}
+DATABASES = {"default": env.db("DATABASE_URL", default="postgres:///yadrta")}
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 # APPS

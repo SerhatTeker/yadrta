@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+
+newrelic-admin run-program gunicorn --bind 0.0.0.0:8000 --access-logfile - config.wsgi:application

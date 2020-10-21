@@ -1,3 +1,16 @@
+# General
+# ------------------------------------------------------------------------------
+USE_DOCKER=yes
+IPYTHONDIR=/app/.ipython
+
+DJANGO_SECRET_KEY=local
+DJANGO_SETTINGS_MODULE=config.settings.local
+DJANGO_ADMIN_URL="admin/"
+
+# Redis
+# ------------------------------------------------------------------------------
+REDIS_URL=redis://redis:6379/0
+
 # Test Admin User
 # ------------------------------------------------------------------------------
 DJANGO_DEV_ADMIN_LOCAL=testadmin:testadmin@testapi.com:123asX3?23
