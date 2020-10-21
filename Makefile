@@ -8,10 +8,10 @@ ENVS		:= ./.envs
 BIN		:= $(VENV)/bin
 PYTHON3		:= $(BIN)/python3
 PYTHON		:= $(PYTHON3)
-DJANGO_PORT	:= 8000
-DBNAME		:= "yadrta"
 
+# Local environment variables for Django
 include $(ENVS)/.local/.django
+include $(ENVS)/.local/.postgres
 
 .PHONY: help venv install migrate startproject runserver django-shell db-up db-shell test coverage travis
 
@@ -81,14 +81,21 @@ test: coverage ## Run tests and make coverage report
 
 # DOCKER
 # -------------------------------------------------------------------------------------
+# Local
 docker-build: ## Start the Docker containers in the background
 	docker-compose -f local.yml build
 
 docker-up: ## Start the Docker containers in the background
 	docker-compose -f local.yml up -d
 
+docker-start: ## Start the Docker containers in the background
+	docker-compose -f local.yml start
+
+docker-stop: ## Start the Docker containers in the background
+	docker-compose -f local.yml stop
+
 db-shell: ## Access the Postgres Docker database interactively with psql
-	docker exec -it container_name psql -d $(DBNAME)
+	docker exec -it $(DBCONTAINER) psql -U $(POSTGRES_USER) -d $(POSTGRES_DB)
 
 echo-docker: ## Ensure Local DB option
 	@echo "$(USE_DOCKER)"

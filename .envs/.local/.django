@@ -6,6 +6,7 @@ IPYTHONDIR=/app/.ipython
 DJANGO_SECRET_KEY=local
 DJANGO_SETTINGS_MODULE=config.settings.local
 DJANGO_ADMIN_URL="admin/"
+DJANGO_PORT=8000
 
 # Redis
 # ------------------------------------------------------------------------------

@@ -1,7 +1,12 @@
 # PostgreSQL
 # ------------------------------------------------------------------------------
-POSTGRES_HOST=postgres
-POSTGRES_PORT=5432
-POSTGRES_DB=djangonews
+POSTGRES_DB=yadrta
 POSTGRES_USER=debug
 POSTGRES_PASSWORD=debug
+POSTGRES_PORT=5432
+POSTGRES_HOST=postgres
+
+# Docker
+# ------------------------------------------------------------------------------
+# Comes from local.yml
+DBCONTAINER="yadrta_postgres"
