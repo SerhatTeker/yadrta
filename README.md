@@ -8,7 +8,9 @@
 __Yet Another Djando REST Todo App__ using django rest and django with [OpenAPI Specification].
 The purpose of this project is to show minimal best practices including tests.
 
-**Demo:** https://yadrta.herokuapp.com
+## Demo
+
+**View Demo**: https://yadrta.herokuapp.com
 
 ![openapi - swagger](./docs/img/screenshots/swagger.png)
 _swagger_
@@ -21,6 +23,7 @@ _django rest api_
 
 ## Table of Contents
 
+* [Demo](#demo)
 * [Table of Contents](#table-of-contents)
 * [General](#general)
   * [Endpoints](#endpoints)
@@ -53,7 +56,7 @@ This app gets requests from `localhost` on port `8000` and performs __CRUD__
 operations.
 
 Base endpoints are:
-- The base endpoint is: http://localhost:8000
+- The base endpoint is: http://localhost:8000 | https://yadrta.herokuapp.com
 - `base_url` for __API v1__ is `/api/v1/`
 - Session Authentication: `/api-auth/login/` `/api-auth/logout/`
 - Admin panels: `/admin/`
@@ -75,6 +78,7 @@ For documemtation:
 - [master] - default branch
 - [basic] - using django's default basic structure
 - [local] - just for local development
+- others - feature branches wip
 
 ### Prerequisites
 
@@ -128,12 +132,13 @@ $ git clone git@github.com:SerhatTeker/yadrta.git
     $ python manage.py runserver 8000
     ```
 
-    or you can use __Makefile__:
+**Make Way**
+
+You can use __Makefile__ to complete the all processes above, just run:
 
     ```bash
+    $ make startproject
     $ make runserver
-    # or shorter : default make target is `runserver`
-    # $ make
     ```
 
 ### Code Quality
@@ -184,35 +189,39 @@ $ curl -d '{"username":"testuser", "password":"testuser", "email":"testuser@test
 
 1. From `manage.py` cli utility tool:
 
-```bash
-$ python manage.py createsuperuser --username testdamin --email testadmin@testapi.com
-```
+    ```bash
+    $ python manage.py createsuperuser --username testdamin --email testadmin@testapi.com
+    ```
 
 2. From `make` target:
 
-First you need to define the environment variable : `DJANGO_DEV_ADMIN`.
 
-```bash
-# DJANGO_DEV_ADMIN=name:email:password
-DJANGO_DEV_ADMIN=testadmin:testadmin@testapi.com:123asX3?23
-```
+    You can use _default_ one from `.envs/.local/.django` or you can define it
+    manually as below:
 
-Then run;
+      ```bash
+      # DJANGO_DEV_ADMIN=name:email:password
+      $ export DJANGO_DEV_ADMIN_LOCAL=testadmin:testadmin@testapi.com:123asX3?23
+      ```
 
-```bash
-$ make createsuperuser
-```
+    To create an admin user for local run:
 
-which will run:
+    ```bash
+    $ make create-superuser
+    ```
 
-```make
-createsuperuser:
-	@echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser(*'${DJANGO_DEV_ADMIN}'.split(':'))" | python manage.py shell
-```
+    which will run:
+
+    ```make
+    @echo "from django.contrib.auth import get_user_model;"\
+      "User = get_user_model();" \
+      "User.objects.create_superuser(*'$(DJANGO_DEV_ADMIN_LOCAL)'.split(':'))" \
+      | $(PYTHON) manage.py shell
+    ```
 
 #### Getting User Token
 
-Run :
+Execute:
 
 ```bash
 $ http http://localhost:8000/api-token-auth/ username=testuser password=testuser
@@ -244,7 +253,7 @@ Use one of the below endpoints:
 - `/admin/`
 - `/api-auth/login/`
 
-###  API v1
+### API v1
 
 `curl`:
 
@@ -367,7 +376,32 @@ $ pytest
 
 ### Test Coverage
 
-Current test coverage:
+To run test with coverage:
+
+```bash
+$ make test
+```
+
+which will execute:
+
+```bash
+$ coverage erase
+$ coverage run -m pytest
+$ coverage report -m
+$ coverage html
+```
+
+Then you can look at the produced report file : `./htmlcov/index.html`, with your
+browser.
+
+For instance open with _Firefox_:
+
+```bash
+$ firefox ./htmlcov/index.html
+```
+
+**Current test coverage:**
+
 [![codecov.io](https://codecov.io/github/SerhatTeker/yadrta/coverage.svg?branch=master)](https://codecov.io/github/SerhatTeker/yadrta?branch=master)
 
 For a detail report: https://codecov.io/github/SerhatTeker/yadrta?branch=master
