@@ -3,7 +3,7 @@
 
 -r ./base.txt
 
-gunicorn==20.0.4  # https://github.com/benoitc/gunicorn
+gunicorn==22.0.0  # https://github.com/benoitc/gunicorn
 
 # Django
 # ------------------------------------------------------------------------------
